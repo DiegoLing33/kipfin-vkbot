@@ -63,11 +63,7 @@ public class CommandsRouter extends WithLogger {
 
         for (Controller controller : this.controllers) {
             Object response = controller.requestExecute(text, btUser, args);
-            if (response != null) {
-                if(response instanceof String)
-                    return BTUser.template((String) response, btUser);
-                return null;
-            }
+            if (response != null) return response;
         }
         return null;
     }
