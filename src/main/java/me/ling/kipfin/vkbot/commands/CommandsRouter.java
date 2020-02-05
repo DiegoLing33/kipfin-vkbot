@@ -57,7 +57,7 @@ public class CommandsRouter extends WithLogger {
      * если test не прошел!
      */
     @Nullable
-    public String execute(String text, @NotNull BTUser btUser) {
+    public Object execute(String text, @NotNull BTUser btUser) {
         this.log(btUser.getUserId(), text);
         ControllerArgs args = CommandsRouter.getArgsFromStringWithNoMainArg(text);
 

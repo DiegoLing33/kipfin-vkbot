@@ -82,12 +82,16 @@ public class Application extends WithLogger {
         group.onMessage(message -> {
             String inputText = StringUtils.removeAllSpaces(message.getText());
             BTUser btUser = BTUser.getInstance(group, message.authorId());
-            String result = router.execute(inputText, btUser);
+            Object result = router.execute(inputText, btUser);
 
-            String responseText = result == null ? BTAnswerType.UNKNOWN_COMMAND.random(btUser) : result;
-
-            new Message().from(group).to(btUser.getUserId()).text(responseText)
-                    .setKeyboard(btUser.getKeyboard()).send();
+            if (result != null) {
+                if (result instanceof String)
+                    new Message().from(group).to(btUser.getUserId()).text(result)
+                            .setKeyboard(btUser.getKeyboard()).send();
+            } else {
+                new Message().from(group).to(btUser.getUserId()).text(BTAnswerType.UNKNOWN_COMMAND.random(btUser))
+                        .setKeyboard(btUser.getKeyboard()).send();
+            }
         });
     }
 
