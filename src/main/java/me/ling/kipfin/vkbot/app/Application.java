@@ -27,6 +27,7 @@ import java.sql.SQLException;
  */
 public class Application extends WithLogger {
 
+    public static String Version = "1.1 Maven Of Time (Build: 30t0)";
 
     protected Integer groupId;
     protected String token;
