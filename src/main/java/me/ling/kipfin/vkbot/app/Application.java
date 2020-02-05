@@ -8,6 +8,7 @@ import me.ling.kipfin.vkbot.controllers.AdditionalController;
 import me.ling.kipfin.vkbot.controllers.HomeController;
 import me.ling.kipfin.vkbot.controllers.StateSetController;
 import me.ling.kipfin.vkbot.controllers.core.UpdateDBController;
+import me.ling.kipfin.vkbot.controllers.core.VersionController;
 import me.ling.kipfin.vkbot.controllers.group.GetRouterController;
 import me.ling.kipfin.vkbot.controllers.group.SelectGroupController;
 import me.ling.kipfin.vkbot.controllers.group.SelectGroupNextController;
@@ -27,7 +28,7 @@ import java.sql.SQLException;
  */
 public class Application extends WithLogger {
 
-    public static String Version = "1.1 Maven Of Time (Build: 30t0)";
+    public static final String Version = "1.1 Maven Of Time (Build: 30t0)";
 
     protected Integer groupId;
     protected String token;
@@ -71,6 +72,7 @@ public class Application extends WithLogger {
         router.addController(new TimetableDayController());
         router.addController(new TimetableNowController());
 
+        router.addController(new VersionController());
         router.addController(new UpdateDBController());
 
         Group group = new Group(this.groupId, this.token);
