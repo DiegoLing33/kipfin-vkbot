@@ -55,7 +55,7 @@ public class BTUser extends WithLogger {
 
     protected String state;
     protected final Integer userId;
-    protected String name = "Петя";
+    protected String name;
     protected BotUserSex sex = BotUserSex.MALE;
 
     @NotNull

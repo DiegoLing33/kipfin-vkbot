@@ -17,7 +17,7 @@ public class StateSetController extends Controller {
     }
 
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         var state = BTUtils.getStateFromTextOrNull(text);
         if (state != null) {
             user.setState(state);

@@ -6,7 +6,6 @@ import me.ling.kipfin.database.university.TeachersDB;
 import me.ling.kipfin.vkbot.commands.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.BTUser;
 import me.ling.kipfin.vkbot.commands.Controller;
-import me.ling.kipfin.vkbot.utils.BTUtils;
 
 /**
  * Контрллер руководителей
@@ -20,7 +19,7 @@ public class GetRouterController extends Controller {
     }
 
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         if (user.isStudent()) {
             for (Teacher teacher : TeachersDB.shared.getCache().values()) {
                 Integer groupId = teacher.getGroupId();

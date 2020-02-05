@@ -52,7 +52,7 @@ public class TimetableNowController extends TimetableController {
      * @return - ответ бота
      */
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
         LocalTime time = LocalTime.now();
 

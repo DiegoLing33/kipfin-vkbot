@@ -73,7 +73,7 @@ public class TimetableDayController extends TimetableController {
      * @return - ответ бота
      */
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
         LocalDate date = this.testTomorrow(args) ? LocalDate.now().plus(1, ChronoUnit.DAYS) : LocalDate.now();
 

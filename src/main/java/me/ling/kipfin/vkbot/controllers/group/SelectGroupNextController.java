@@ -23,7 +23,7 @@ public class SelectGroupNextController extends Controller {
     }
 
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         String first = text.substring(0, 1);
         List<String> groups = GroupsDB.shared.getCache().values().stream()
                 .filter(universityGroup -> universityGroup.getTitle().substring(0, 1).equals(first))

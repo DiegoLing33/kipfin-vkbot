@@ -16,7 +16,7 @@ public abstract class TimetableController extends Controller {
 
     @Nullable
     @Override
-    public String requestExecute(String text, BTUser user, ControllerArgs args) {
+    public Object requestExecute(String text, BTUser user, ControllerArgs args) {
         try {
             return super.requestExecute(text, user, args);
         } catch (NoTimetableOnDateException ex) {

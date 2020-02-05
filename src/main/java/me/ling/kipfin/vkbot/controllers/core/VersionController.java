@@ -12,7 +12,7 @@ public class VersionController extends Controller {
     }
 
     @Override
-    protected String execute(String text, BTUser user, ControllerArgs args) {
+    protected Object execute(String text, BTUser user, ControllerArgs args) {
         return Application.Version;
     }
 }

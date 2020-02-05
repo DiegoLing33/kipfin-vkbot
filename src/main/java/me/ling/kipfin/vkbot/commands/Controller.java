@@ -38,7 +38,7 @@ public abstract class Controller {
      * @param args - аргументы контроллера
      * @return - ответ бота
      */
-    protected abstract String execute(String text, BTUser user, ControllerArgs args);
+    protected abstract Object execute(String text, BTUser user, ControllerArgs args);
 
     /**
      * Запрашивает исполнение
@@ -49,7 +49,7 @@ public abstract class Controller {
      * @return      - возвращает ответ контроллера или null
      */
     @Nullable
-    public String requestExecute(String text, BTUser user, ControllerArgs args) {
+    public Object requestExecute(String text, BTUser user, ControllerArgs args) {
         if (this.test(text, user, args))
             return execute(text, user, args);
         return null;

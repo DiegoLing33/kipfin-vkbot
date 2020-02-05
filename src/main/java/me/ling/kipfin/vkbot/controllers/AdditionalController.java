@@ -12,9 +12,8 @@ public class AdditionalController extends Controller {
     }
 
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
-        if(user.isStudent()) user.setKeyboard(Keyboard.additionalStudent);
-        if(user.isTeacher()) user.setKeyboard(Keyboard.additionalTeacher);
+    public Object execute(String text, BTUser user, ControllerArgs args) {
+        user.setKeyboard(user.isStudent() ? Keyboard.additionalStudent : Keyboard.additionalTeacher);
         return "Дополнительная информация 👾";
     }
 }

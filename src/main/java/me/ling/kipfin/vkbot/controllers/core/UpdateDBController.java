@@ -6,7 +6,6 @@ import me.ling.kipfin.vkbot.commands.ControllerArgs;
 import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.entities.BotAnswer;
 import me.ling.kipfin.vkbot.entities.BTUser;
 import me.ling.kipfin.vkbot.commands.Controller;
 
@@ -23,7 +22,7 @@ public class UpdateDBController extends Controller {
     }
 
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         if(!user.isAdmin()) return BTAnswerType.DENY_PERMISSIONS.random();
         try {
             GroupsDB.shared.update();

@@ -12,7 +12,7 @@ public class SelectGroupController extends Controller {
     }
 
     @Override
-    public String execute(String text, BTUser user, ControllerArgs args) {
+    public Object execute(String text, BTUser user, ControllerArgs args) {
         user.setKeyboard(Keyboard.courses);
         return "Выберите курс";
     }
