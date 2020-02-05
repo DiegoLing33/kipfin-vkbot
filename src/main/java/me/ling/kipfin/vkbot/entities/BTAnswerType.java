@@ -17,6 +17,7 @@ public final class BTAnswerType {
     public final static BTAnswerType DENY_PERMISSIONS = new BTAnswerType("DENY_PERM");
     public final static BTAnswerType ERROR = new BTAnswerType("ERROR");
 
+    public final static BTAnswerType HELP = new BTAnswerType("HELP");
     public final static BTAnswerType HOME = new BTAnswerType("HOME");
     public final static BTAnswerType HOME_UNDEFINED = new BTAnswerType("UND_HOME");
 
@@ -25,6 +26,7 @@ public final class BTAnswerType {
 
     public final static BTAnswerType NO_TIMETABLE_AT_DATE = new BTAnswerType("NO_TIMETABLE_AT_DATE");
     public final static BTAnswerType NO_SUBJECTS = new BTAnswerType("NO_SUBJECTS");
+    public final static BTAnswerType NO_ROUTING = new BTAnswerType("NO_ROUTING");
 
     public final static BTAnswerType SOMETHING_WENT_WRONG = new BTAnswerType("SMT_WNT_WRONG");
     public final static BTAnswerType UNKNOWN_COMMAND = new BTAnswerType("UNK_CMD");

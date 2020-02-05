@@ -2,6 +2,7 @@ package me.ling.kipfin.vkbot;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import me.ling.kipfin.core.Bootloader;
+import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.Application;
 

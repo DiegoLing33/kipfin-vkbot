@@ -19,7 +19,7 @@ public class SelectGroupNextController extends Controller {
 
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {
-        return args.test("1 курс", "2 курс", "3 курс", "4 курс");
+        return this.testAlias(text, "1 курс", "2 курс", "3 курс", "4 курс");
     }
 
     @Override

@@ -43,17 +43,16 @@ public class TimetableDayController extends TimetableController {
 
     /**
      * Тестирует контрллер
-     *
+     * <p>
      * Данный метод является главным в контроллере - он отвечает за роутинг. Если данный метод возвращает
      * значение true, будет запущен метод Controller::execute данного класса.
-     *
-     * @warning метод `Controller::execute` данного класса НИКОГДА не будет запущен, кроме случаев, когда
-     *   `Controller::test` возвращает true. <b>Нет необходимости делнть двойные проверки</b>!
      *
      * @param text - полученный текст
      * @param user - пользователь
      * @param args - аргументы
      * @return - результат проверки
+     * @warning метод `Controller::execute` данного класса НИКОГДА не будет запущен, кроме случаев, когда
+     * `Controller::test` возвращает true. <b>Нет необходимости делнть двойные проверки</b>!
      */
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {
@@ -62,20 +61,22 @@ public class TimetableDayController extends TimetableController {
 
     /**
      * Выполняет метод и возвращает ответ
-     *
+     * <p>
      * Данный метод выполняется только после выполнения метода `Controller::test`!
-     * @see Controller
-     * @see Controller::test
      *
      * @param text - текст
      * @param user - пользователь
      * @param args - аргументы контроллера
      * @return - ответ бота
+     * @see Controller
+     * @see Controller::test
      */
     @Override
     public Object execute(String text, BTUser user, ControllerArgs args) {
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
-        LocalDate date = this.testTomorrow(args) ? LocalDate.now().plus(1, ChronoUnit.DAYS) : LocalDate.now();
+
+        int add = DateUtils.getLocalWeekDay(LocalDate.now()) == 4 ? 3 : 1;
+        LocalDate date = this.testTomorrow(args) ? LocalDate.now().plus(add, ChronoUnit.DAYS) : LocalDate.now();
 
         String dateString = DateUtils.toLocalDateString(date);
         TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);

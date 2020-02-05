@@ -8,7 +8,7 @@ import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
 public class SelectGroupController extends Controller {
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {
-        return args.test("Выбрать группу", "Группа");
+        return this.testAlias(text, "Выбрать группу", "Группа");
     }
 
     @Override

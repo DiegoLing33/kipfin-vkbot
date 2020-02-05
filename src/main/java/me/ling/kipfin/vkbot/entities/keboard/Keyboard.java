@@ -53,7 +53,8 @@ public class Keyboard {
             new Keyboard()
                     .add(new Button("Группа в руководстве"), 0)
                     .add(new Button("Справка", Button.SECONDARY), 1)
-                    .add(new Button("Домой", Button.SECONDARY), 1);
+                    .add(new Button("Выбрать группу", Button.SECONDARY), 1)
+                    .add(new Button("Домой", Button.SECONDARY), 2);
 
     @JsonProperty("one_time")
     protected boolean oneTime = false;

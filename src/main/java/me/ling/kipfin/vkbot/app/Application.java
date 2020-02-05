@@ -8,6 +8,7 @@ import me.ling.kipfin.vkbot.commands.CommandsRouter;
 import me.ling.kipfin.vkbot.controllers.AdditionalController;
 import me.ling.kipfin.vkbot.controllers.HomeController;
 import me.ling.kipfin.vkbot.controllers.StateSetController;
+import me.ling.kipfin.vkbot.controllers.core.HelpController;
 import me.ling.kipfin.vkbot.controllers.core.UpdateDBController;
 import me.ling.kipfin.vkbot.controllers.core.VersionController;
 import me.ling.kipfin.vkbot.controllers.group.GetRouterController;
@@ -70,6 +71,7 @@ public class Application extends WithLogger {
 
         CommandsRouter router = new CommandsRouter();
 
+        router.addController(new HelpController());
         router.addController(new HomeController());
         router.addController(new StateSetController());
         router.addController(new AdditionalController());

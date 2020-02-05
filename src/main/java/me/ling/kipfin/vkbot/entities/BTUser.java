@@ -32,6 +32,7 @@ public class BTUser extends WithLogger {
                 .replaceAll("\\{name}", BTUser.getName())
                 .replaceAll("\\{id}", BTUser.getUserId().toString())
                 .replaceAll("\\{state}", BTUser.getState())
+                .replaceAll("\\[n]", "\n")
                 .replaceAll("\\[([^|]+)\\|([^)]+)]", BTUser.getSex().equals(BotUserSex.MALE) ? "$1" : "$2");
     }
 

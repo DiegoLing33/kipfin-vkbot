@@ -15,7 +15,7 @@ public final class BTUtils {
      */
     @Nullable
     public static String getStateFromTextOrNull(@Nullable String text) {
-        if (text == null) return null;
+        if (text == null || text.isEmpty()) return null;
         try {
             return GroupsDB.shared.easy(text).getTitle();
         } catch (Exception e) {
