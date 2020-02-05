@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.messagecomponents;
+package me.ling.kipfin.vkbot.app;
 
 /**
  * Компонент сообщения

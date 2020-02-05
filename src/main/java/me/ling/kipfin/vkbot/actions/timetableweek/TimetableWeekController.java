@@ -1,13 +1,11 @@
-package me.ling.kipfin.vkbot.controllers.timetable;
+package me.ling.kipfin.vkbot.actions.timetableweek;
 
 import me.ling.kipfin.core.utils.DateUtils;
-import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.messagemodels.TimetableWeekModel;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 import java.time.LocalDate;

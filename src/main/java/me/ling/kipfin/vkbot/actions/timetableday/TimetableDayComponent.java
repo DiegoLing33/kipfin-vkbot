@@ -1,7 +1,8 @@
-package me.ling.kipfin.vkbot.messagecomponents.timetable;
+package me.ling.kipfin.vkbot.actions.timetableday;
 
-import me.ling.kipfin.vkbot.messagecomponents.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.messagecomponents.TextComponent;
+import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

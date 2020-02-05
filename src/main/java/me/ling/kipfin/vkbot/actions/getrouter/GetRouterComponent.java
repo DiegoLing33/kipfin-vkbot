@@ -1,6 +1,6 @@
-package me.ling.kipfin.vkbot.messagecomponents.group;
+package me.ling.kipfin.vkbot.actions.getrouter;
 
-import me.ling.kipfin.vkbot.messagecomponents.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 public class GetRouterComponent extends MessageComponent {

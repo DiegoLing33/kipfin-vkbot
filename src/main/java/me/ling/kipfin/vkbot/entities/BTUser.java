@@ -39,7 +39,7 @@ public class BTUser extends WithLogger {
     /**
      * Сохраненные в памяти польователи
      */
-    protected static Map<Integer, BTUser> users = new HashMap<>();
+    protected static final Map<Integer, BTUser> users = new HashMap<>();
 
     /**
      * Возвращает ссылку на пользователя
@@ -54,9 +54,10 @@ public class BTUser extends WithLogger {
         return users.get(userId);
     }
 
-    protected String state;
     protected final Integer userId;
-    protected String name;
+    protected final String name;
+
+    protected String state;
     protected BotUserSex sex = BotUserSex.MALE;
 
     @NotNull

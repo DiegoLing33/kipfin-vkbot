@@ -1,7 +1,7 @@
 package me.ling.kipfin.vkbot.messagecomponents.timetable;
 
 import me.ling.kipfin.timetable.entities.Classroom;
-import me.ling.kipfin.vkbot.messagecomponents.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageComponent;
 
 /**
  * Компонент аудитории для преподавателя

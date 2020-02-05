@@ -1,7 +1,8 @@
-package me.ling.kipfin.vkbot.messagecomponents.timetable;
+package me.ling.kipfin.vkbot.actions.timetableweek;
 
-import com.google.common.base.Joiner;
-import me.ling.kipfin.vkbot.messagecomponents.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageComponent;
+import me.ling.kipfin.vkbot.messagecomponents.timetable.SubjectComponent;
+import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
 
 import java.util.List;
 import java.util.stream.Collectors;

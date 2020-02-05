@@ -1,13 +1,12 @@
-package me.ling.kipfin.vkbot.controllers.timetable;
+package me.ling.kipfin.vkbot.actions.timetableday;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.commands.Controller;
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.messagemodels.SubjectsModel;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -68,8 +67,8 @@ public class TimetableDayController extends TimetableController {
      * @param user - пользователь
      * @param args - аргументы контроллера
      * @return - ответ бота
-     * @see Controller
-     * @see Controller::test
+     * @see MessageController
+     * @see MessageController ::test
      */
     @Override
     public Object execute(String text, BTUser user, ControllerArgs args) {
@@ -80,6 +79,7 @@ public class TimetableDayController extends TimetableController {
 
         String dateString = DateUtils.toLocalDateString(date);
         TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
-        return SubjectsModel.getExtendedDay(state, user, master).toString();
+        TimetableDayModel model = new TimetableDayModel(state, master);
+        return model.getComponent();
     }
 }

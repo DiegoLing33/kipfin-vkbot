@@ -1,17 +1,13 @@
-package me.ling.kipfin.vkbot.controllers.group;
+package me.ling.kipfin.vkbot.actions.getrouter;
 
-import me.ling.kipfin.core.entities.university.Teacher;
-import me.ling.kipfin.database.university.GroupsDB;
-import me.ling.kipfin.database.university.TeachersDB;
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.commands.Controller;
-import me.ling.kipfin.vkbot.messagemodels.group.GetRouterModel;
+import me.ling.kipfin.vkbot.app.MessageController;
 
 /**
  * Контрллер руководителей
  */
-public class GetRouterController extends Controller {
+public class GetRouterController extends MessageController {
 
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {

@@ -1,10 +1,9 @@
-package me.ling.kipfin.vkbot.messagemodels.group;
+package me.ling.kipfin.vkbot.actions.getrouter;
 
 import me.ling.kipfin.core.entities.university.Teacher;
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.database.university.TeachersDB;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.messagecomponents.group.GetRouterComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 public class GetRouterModel {

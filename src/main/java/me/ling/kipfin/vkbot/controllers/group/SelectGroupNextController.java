@@ -2,9 +2,9 @@ package me.ling.kipfin.vkbot.controllers.group;
 
 import me.ling.kipfin.core.entities.university.UniversityGroup;
 import me.ling.kipfin.database.university.GroupsDB;
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.commands.Controller;
+import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.entities.keboard.Button;
 import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Контроллер выбора группы
  */
-public class SelectGroupNextController extends Controller {
+public class SelectGroupNextController extends MessageController {
 
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {

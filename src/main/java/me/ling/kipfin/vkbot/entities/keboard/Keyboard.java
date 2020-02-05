@@ -3,7 +3,6 @@ package me.ling.kipfin.vkbot.entities.keboard;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.ling.kipfin.vkbot.controllers.group.SelectGroupNextController;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

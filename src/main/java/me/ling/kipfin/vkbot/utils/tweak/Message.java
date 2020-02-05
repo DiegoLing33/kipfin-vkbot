@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.tweak;
+package me.ling.kipfin.vkbot.utils.tweak;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.petersamokhin.bots.sdk.callbacks.callbackapi.ExecuteCallback;
@@ -207,7 +207,7 @@ public class Message extends com.petersamokhin.bots.sdk.objects.Message {
                 try {
                     photoBytes = Utils.toByteArray(photoUrl);
                 } catch (IOException ignored) {
-                    LOG.error("Error {} occured when reading URL {}", ignored.toString(), photo);
+                    LOG.error("Error {} occurred when reading URL {}", ignored.toString(), photo);
                     return this;
                 }
                 break;
@@ -905,7 +905,7 @@ public class Message extends com.petersamokhin.bots.sdk.objects.Message {
 
         int photo = 0, video = 0, audio = 0, doc = 0, wall = 0, link = 0;
 
-        Map<String, Integer> answer = new HashMap<String, Integer>() {{
+        Map<String, Integer> answer = new HashMap<>() {{
             put("photo", 0);
             put("video", 0);
             put("audio", 0);

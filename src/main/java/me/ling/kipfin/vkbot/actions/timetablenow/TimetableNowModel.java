@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.messagemodels;
+package me.ling.kipfin.vkbot.actions.timetablenow;
 
 import me.ling.kipfin.abstracts.Indexable;
 import me.ling.kipfin.exceptions.NotFoundEntityException;
@@ -9,8 +9,9 @@ import me.ling.kipfin.timetable.entities.Classroom;
 import me.ling.kipfin.timetable.entities.ExtendedSubject;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
+import me.ling.kipfin.vkbot.actions.timetableday.TimetableDayComponent;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.messagecomponents.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.messagecomponents.TextComponent;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.*;
 import me.ling.kipfin.vkbot.utils.BTUtils;

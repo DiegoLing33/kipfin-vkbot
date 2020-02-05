@@ -1,7 +1,7 @@
 package me.ling.kipfin.vkbot.messagecomponents.timetable;
 
 import me.ling.kipfin.core.utils.DateUtils;
-import me.ling.kipfin.vkbot.messagecomponents.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageComponent;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

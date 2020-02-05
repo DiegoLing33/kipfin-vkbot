@@ -18,7 +18,7 @@ public class BotAnswersDB extends EntityDB<BotAnswer, DatabaseEntityNotFoundExce
     /**
      *  Ответы бота
      */
-    public static BotAnswersDB shared = new BotAnswersDB();
+    public static final BotAnswersDB shared = new BotAnswersDB();
 
     @Override
     public Map<Integer, BotAnswer> getAll() throws SQLException {

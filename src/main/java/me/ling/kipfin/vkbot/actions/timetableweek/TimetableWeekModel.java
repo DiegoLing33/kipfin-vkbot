@@ -1,9 +1,9 @@
-package me.ling.kipfin.vkbot.messagemodels;
+package me.ling.kipfin.vkbot.actions.timetableweek;
 
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.SubjectComponent;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
-import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableWeekComponent;
+import me.ling.kipfin.vkbot.actions.timetableweek.TimetableWeekComponent;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

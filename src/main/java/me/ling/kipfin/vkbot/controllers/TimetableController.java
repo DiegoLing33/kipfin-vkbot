@@ -1,10 +1,9 @@
 package me.ling.kipfin.vkbot.controllers;
 
-import me.ling.kipfin.exceptions.NotFoundEntityException;
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
-import me.ling.kipfin.vkbot.commands.Controller;
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Контроллер для расписания (В нем содержится обработка исключений)
  */
-public abstract class TimetableController extends Controller {
+public abstract class TimetableController extends MessageController {
 
     @Nullable
     @Override

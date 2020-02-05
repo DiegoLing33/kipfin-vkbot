@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.commands;
+package me.ling.kipfin.vkbot.app;
 
 import me.ling.kipfin.vkbot.entities.BTUser;
 import org.jetbrains.annotations.Nullable;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * Контроллер
  */
-public abstract class Controller {
+public abstract class MessageController {
 
     /**
      * Тестирует контрллер
@@ -30,8 +30,8 @@ public abstract class Controller {
      * Выполняет метод и возвращает ответ
      *
      * Данный метод выполняется только после выполнения метода `Controller::test`!
-     * @see Controller
-     * @see Controller::test
+     * @see MessageController
+     * @see MessageController ::test
      *
      * @param text - текст
      * @param user - пользователь

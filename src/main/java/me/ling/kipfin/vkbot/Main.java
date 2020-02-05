@@ -2,11 +2,9 @@ package me.ling.kipfin.vkbot;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import me.ling.kipfin.core.Bootloader;
-import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.Application;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -17,7 +15,7 @@ public class Main {
      *
      * @param args - аргументы
      */
-    public static void main(String[] args) throws SQLException, IOException {
+    public static void main(String[] args) throws SQLException {
         Dotenv dotenv = Dotenv.load();
         Bootloader bootloader = new Bootloader(dotenv);
         bootloader.updateDatabase(false);

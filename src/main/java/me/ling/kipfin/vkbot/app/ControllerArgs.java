@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.commands;
+package me.ling.kipfin.vkbot.app;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

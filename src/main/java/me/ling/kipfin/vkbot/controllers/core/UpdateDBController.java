@@ -2,19 +2,19 @@ package me.ling.kipfin.vkbot.controllers.core;
 
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.database.university.TeachersDB;
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.commands.Controller;
+import me.ling.kipfin.vkbot.app.MessageController;
 
 import java.sql.SQLException;
 
 /**
  * Обновление баз данных
  */
-public class UpdateDBController extends Controller {
+public class UpdateDBController extends MessageController {
 
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {

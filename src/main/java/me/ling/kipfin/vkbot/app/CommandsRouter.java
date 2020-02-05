@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.commands;
+package me.ling.kipfin.vkbot.app;
 
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.vkbot.entities.BTUser;
@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class CommandsRouter extends WithLogger {
     /**
      * Контроллеры
      */
-    protected List<Controller> controllers = new ArrayList<>();
+    protected final List<MessageController> controllers = new ArrayList<>();
 
     public CommandsRouter() {
         super("Router");
@@ -61,7 +60,7 @@ public class CommandsRouter extends WithLogger {
         this.log(btUser.getUserId(), text);
         ControllerArgs args = CommandsRouter.getArgsFromStringWithNoMainArg(text);
 
-        for (Controller controller : this.controllers) {
+        for (MessageController controller : this.controllers) {
             Object response = controller.requestExecute(text, btUser, args);
             if (response != null) return response;
         }
@@ -73,7 +72,7 @@ public class CommandsRouter extends WithLogger {
      *
      * @param controller - конттролер
      */
-    public void addController(Controller controller) {
+    public void addController(MessageController controller) {
         this.controllers.add(controller);
     }
 }

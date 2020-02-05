@@ -1,14 +1,12 @@
 package me.ling.kipfin.vkbot.database;
 
 import me.ling.kipfin.core.EntityDB;
-import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.managers.SQLManager;
 import me.ling.kipfin.core.sql.SQLObjectMapper;
 import me.ling.kipfin.exceptions.DatabaseEntityNotFoundException;
 import me.ling.kipfin.vkbot.entities.BotValue;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
@@ -18,7 +16,7 @@ public class BotValuesDB extends EntityDB<BotValue, DatabaseEntityNotFoundExcept
     /**
      * Общая база данных
      */
-    public static BotValuesDB shared = new BotValuesDB();
+    public static final BotValuesDB shared = new BotValuesDB();
 
     @Override
     public Map<Integer, BotValue> getAll() throws SQLException {
@@ -46,10 +44,9 @@ public class BotValuesDB extends EntityDB<BotValue, DatabaseEntityNotFoundExcept
      * @param type      - тип
      * @param key       - ключ
      * @param value     - значение
-     * @return          - результат
      * @throws SQLException - исключения SQL
      */
-    public boolean setValue(String type, String key, @NotNull Object value) throws SQLException {
+    public void setValue(String type, String key, @NotNull Object value) throws SQLException {
         var connection = SQLManager.getConnection();
         Statement statement = connection.createStatement();
         var updates = statement.executeUpdate(
@@ -58,9 +55,8 @@ public class BotValuesDB extends EntityDB<BotValue, DatabaseEntityNotFoundExcept
              var result = statement.executeQuery(String.format("INSERT INTO bot_values (`kw`, `type`, `value`) VALUES ('%s', '%s', '%s')",
                     key, type, value.toString())).rowInserted();
              connection.close();
-             return result;
+             return;
         }
         connection.close();
-        return true;
     }
 }

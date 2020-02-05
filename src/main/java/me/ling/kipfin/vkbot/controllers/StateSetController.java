@@ -1,15 +1,15 @@
 package me.ling.kipfin.vkbot.controllers;
 
-import me.ling.kipfin.vkbot.commands.ControllerArgs;
+import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.commands.Controller;
+import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 /**
  * Контроллер установки группы
  */
-public class StateSetController extends Controller {
+public class StateSetController extends MessageController {
 
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {

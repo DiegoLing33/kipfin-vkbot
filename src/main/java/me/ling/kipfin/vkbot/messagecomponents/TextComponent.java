@@ -1,5 +1,7 @@
 package me.ling.kipfin.vkbot.messagecomponents;
 
+import me.ling.kipfin.vkbot.app.MessageComponent;
+
 /**
  * Текстовой компонент
  */
