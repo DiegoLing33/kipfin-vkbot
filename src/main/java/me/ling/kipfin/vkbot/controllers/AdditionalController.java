@@ -8,7 +8,7 @@ import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
 public class AdditionalController extends Controller {
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {
-        return (user.isStudent() || user.isTeacher()) && this.testAlias(text, "Дополнительно");
+        return (user.isStudent() || user.isTeacher()) && args.test("Дополнительно");
     }
 
     @Override
