@@ -3,6 +3,9 @@ package me.ling.kipfin.vkbot.app;
 import com.petersamokhin.bots.sdk.clients.Group;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.core.utils.StringUtils;
+import me.ling.kipfin.vkbot.actions.admin.broadcastupdate.BroadcastNewTimetable;
+import me.ling.kipfin.vkbot.actions.admin.broadcastupdate.BroadcastUpdateController;
+import me.ling.kipfin.vkbot.actions.admin.stat.StatController;
 import me.ling.kipfin.vkbot.controllers.AdditionalController;
 import me.ling.kipfin.vkbot.controllers.HomeController;
 import me.ling.kipfin.vkbot.controllers.StateSetController;
@@ -19,14 +22,18 @@ import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.managers.BTStatsManager;
+import me.ling.kipfin.vkbot.utils.BroadcastMessage;
 import me.ling.kipfin.vkbot.utils.tweak.Message;
 import org.apache.commons.collections4.Closure;
 import org.apache.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Приложение
@@ -68,6 +75,9 @@ public class Application extends WithLogger {
 
         CommandsRouter router = new CommandsRouter();
 
+        router.addController(new BroadcastUpdateController());
+        router.addController(new BroadcastNewTimetable());
+
         router.addController(new HelpController());
         router.addController(new HomeController());
         router.addController(new StateSetController());
@@ -82,25 +92,46 @@ public class Application extends WithLogger {
         router.addController(new TimetableWeekController());
 
         router.addController(new VersionController());
+        router.addController(new StatController());
         router.addController(new UpdateDBController());
 
         this.log(true, "Приложение запущено!");
 
         // Long poll starts right here
         group.onMessage(message -> {
-            String inputText = StringUtils.removeAllSpaces(message.getText());
-            BTUser btUser = BTUser.getInstance(group, message.authorId());
-            Object result = router.execute(inputText, btUser);
+            try {
+                String inputText = StringUtils.removeAllSpaces(message.getText());
+                BTUser btUser = BTUser.getInstance(group, message.authorId());
+                Object result = router.execute(inputText, btUser);
+                BTStatsManager.add(btUser.getUserId(), message.getText());
 
-            if (result != null) {
-                if (result instanceof String)
-                    this.sendMessage(btUser, (String) result);
-                else if (result instanceof String[]) {
-                    this.sendAsyncButch(btUser, (String[]) result);
+                if (result != null) {
+                    if (result instanceof String)
+                        this.sendMessage(btUser, (String) result);
+                    else if (result instanceof String[]) {
+                        this.sendAsyncButch(btUser, (String[]) result);
+                    } else if (result instanceof BroadcastMessage) {
+                        this.sendBroadcast((BroadcastMessage) result);
+                    }
+                } else {
+                    this.sendMessage(btUser, BTAnswerType.UNKNOWN_COMMAND.random());
                 }
-            } else {
-                this.sendMessage(btUser, BTAnswerType.UNKNOWN_COMMAND.random());
+            }catch (Exception e){
+                e.printStackTrace();
             }
+        });
+    }
+
+    public void sendBroadcast(BroadcastMessage message) {
+        message.getUsers().forEach(id -> {
+            var user = BTUser.getInstance(this.group, id);
+            var text = BTUser.template(message.getMessage(), user);
+            new Message()
+                    .from(this.group)
+                    .to(id)
+                    .text(text)
+                    .photo(message.getImage())
+                    .send();
         });
     }
 
