@@ -95,4 +95,14 @@ public class ControllerArgs extends ArrayList<String> {
     public String getMainArg() {
         return mainArg;
     }
+
+    /**
+     * Возвращает true, если аргумент существует
+     *
+     * @param index - индекс
+     * @return - результат тестирования
+     */
+    public boolean hasArg(int index) {
+        return this.getOrNull(index) != null;
+    }
 }

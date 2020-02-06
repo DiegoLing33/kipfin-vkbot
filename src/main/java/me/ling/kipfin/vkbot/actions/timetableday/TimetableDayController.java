@@ -80,6 +80,6 @@ public class TimetableDayController extends TimetableController {
         String dateString = DateUtils.toLocalDateString(date);
         TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
         TimetableDayModel model = new TimetableDayModel(state, master);
-        return model.getComponent();
+        return model.getComponent().toString();
     }
 }

@@ -1,13 +1,13 @@
 package me.ling.kipfin.vkbot.actions.getrouter;
 
 import me.ling.kipfin.vkbot.app.ControllerArgs;
+import me.ling.kipfin.vkbot.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.app.MessageController;
 
 /**
  * Контрллер руководителей
  */
-public class GetRouterController extends MessageController {
+public class GetRouterController extends TimetableController {
 
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {
