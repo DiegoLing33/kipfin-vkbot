@@ -13,10 +13,17 @@ import java.util.List;
  */
 public class Keyboard {
 
+    /**
+     * Стартовая клавиатура
+     */
     public static final Keyboard start =
             new Keyboard()
-                    .add(new Button("Выбрать группу"));
+                    .add(new Button("Выбрать группу"), 0)
+                    .add(new Button("Справка", Button.SECONDARY), 1);
 
+    /**
+     * Стартовая клавиатура студента
+     */
     public static final Keyboard student =
             new Keyboard()
                     .add(new Button("Сегодня"), 0)
@@ -24,6 +31,9 @@ public class Keyboard {
                     .add(new Button("Сейчас"), 1)
                     .add(new Button("Дополнительно", Button.SECONDARY), 2);
 
+    /**
+     * Стартовая клавиатура учителя
+     */
     public static final Keyboard teacher =
             new Keyboard()
                     .add(new Button("Сегодня"), 0)
@@ -31,6 +41,9 @@ public class Keyboard {
                     .add(new Button("Сейчас"), 1)
                     .add(new Button("Дополнительно", Button.SECONDARY), 2);
 
+    /**
+     * Клавиатура выбора курса
+     */
     public static final Keyboard courses =
             new Keyboard()
                     .add(new Button("1 курс"), 0)
@@ -40,6 +53,9 @@ public class Keyboard {
                     .add(new Button("Домой", Button.SECONDARY), 2);
 
 
+    /**
+     * Клавиатура "Дополнительно" для студента
+     */
     public static final Keyboard additionalStudent =
             new Keyboard()
                     .add(new Button("Классный руководитель"), 0)
@@ -48,6 +64,9 @@ public class Keyboard {
                     .add(new Button("Справка", Button.SECONDARY), 2)
                     .add(new Button("Домой", Button.SECONDARY), 3);
 
+    /**
+     * Клавиатура "Дополнительно" для преподавателя
+     */
     public static final Keyboard additionalTeacher =
             new Keyboard()
                     .add(new Button("Группа в руководстве"), 0)
