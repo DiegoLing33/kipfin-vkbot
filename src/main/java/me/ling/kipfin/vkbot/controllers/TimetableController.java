@@ -6,6 +6,8 @@ import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
+import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
 import me.ling.kipfin.vkbot.exceptions.StateNotSetException;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,11 +18,12 @@ public abstract class TimetableController extends MessageController {
 
     /**
      * Провреяет наличие установленного состояния
-     * @param user                  - пользователь
+     *
+     * @param user - пользователь
      * @throws StateNotSetException - исключение отсутсвия состояния
      */
     public void checkUserState(BTUser user) throws StateNotSetException {
-        if(user == null || user.getState().isEmpty() || user.getState().isBlank())
+        if (user == null || user.getState().isEmpty() || user.getState().isBlank())
             throw new StateNotSetException();
     }
 
@@ -34,8 +37,11 @@ public abstract class TimetableController extends MessageController {
         } catch (NoSubjectsException ex) {
             return BTAnswerType.NO_SUBJECTS.random(user.isTeacher());
         } catch (StateNotSetException ex) {
-            return BTAnswerType.HOME_UNDEFINED.random();
+            return new ImagedTextMessage(BTAnswerType.HOME_UNDEFINED.random(),
+                    Keyboard.startInline,
+                    TimetableController.class.getResource("/hi.jpg").toString());
         } catch (Exception ex) {
+            ex.printStackTrace();
             return BTAnswerType.SOMETHING_WENT_WRONG.random();
         }
     }

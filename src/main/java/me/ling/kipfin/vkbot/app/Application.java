@@ -21,8 +21,10 @@ import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
 import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.managers.BTStatsManager;
-import me.ling.kipfin.vkbot.utils.BroadcastMessage;
+import me.ling.kipfin.vkbot.entities.message.BroadcastMessage;
 import me.ling.kipfin.vkbot.utils.tweak.Message;
 import org.apache.commons.collections4.Closure;
 import org.apache.log4j.Level;
@@ -102,32 +104,47 @@ public class Application extends WithLogger {
                 BTStatsManager.add(btUser.getUserId(), message.getText());
 
                 if (result != null) {
-                    if (result instanceof String)
-                        this.sendMessage(btUser, (String) result);
-                    else if (result instanceof String[]) {
-                        this.sendAsyncButch(btUser, (String[]) result);
-                    } else if (result instanceof BroadcastMessage) {
-                        this.sendBroadcast((BroadcastMessage) result);
-                    }
+                    if (result instanceof String) this.sendMessage(btUser, (String) result);
+                    else if (result instanceof String[]) this.sendAsyncButch(btUser, (String[]) result);
+                    else if (result instanceof BroadcastMessage) this.sendBroadcast((BroadcastMessage) result);
+                    else if (result instanceof ImagedTextMessage)
+                        this.sendImagedTextMessage((ImagedTextMessage) result, btUser);
+                    else if (result instanceof TextMessage) this.sendTextMessage((TextMessage) result, btUser);
                 } else {
                     this.sendMessage(btUser, BTAnswerType.UNKNOWN_COMMAND.random());
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
+    public void sendTextMessage(@NotNull TextMessage message, @NotNull BTUser user) {
+        var m = new Message().from(this.group).to(user.getUserId())
+                .text(BTUser.template(message.getText(), user));
+        if (message.getKeyboard() != null) m.setKeyboard(message.getKeyboard());
+        m.send();
+    }
+
+    public void sendImagedTextMessage(@NotNull ImagedTextMessage message, @NotNull BTUser user) {
+        var m = new Message().from(this.group).to(user.getUserId())
+                .text(BTUser.template(message.getText(), user));
+        if (message.getKeyboard() != null) m.setKeyboard(message.getKeyboard());
+        if (message.getImage() != null) m.photo(message.getImage());
+        m.send();
+    }
+
     public void sendBroadcast(BroadcastMessage message) {
         message.getUsers().forEach(id -> {
             var user = BTUser.getInstance(this.group, id);
-            var text = BTUser.template(message.getMessage(), user);
-            new Message()
+            var text = BTUser.template(message.getText(), user);
+            var m = new Message()
                     .from(this.group)
                     .to(id)
-                    .text(text)
-                    .photo(message.getImage())
-                    .send();
+                    .text(text);
+            if (message.getImage() != null) m.photo(message.getImage());
+            if (message.getKeyboard() != null) m.setKeyboard(message.getKeyboard());
+            m.send();
         });
     }
 

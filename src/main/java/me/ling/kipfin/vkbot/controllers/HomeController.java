@@ -5,7 +5,7 @@ import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
 import me.ling.kipfin.vkbot.app.MessageController;
 
-public class HomeController extends MessageController {
+public class HomeController extends TimetableController {
     @Override
     public boolean test(String text, BTUser user, ControllerArgs args) {
         return args.test("Домой", "Начать", "/start", "Начало");
@@ -15,6 +15,7 @@ public class HomeController extends MessageController {
     public Object execute(String text, BTUser user, ControllerArgs args) {
         user.reload();
         if (user.isStudent() || user.isTeacher()) return BTAnswerType.HOME.random(user.isTeacher());
-        return BTAnswerType.HOME_UNDEFINED.random();
+        this.checkUserState(user);
+        return null;
     }
 }

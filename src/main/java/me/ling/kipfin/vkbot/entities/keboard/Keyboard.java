@@ -22,6 +22,15 @@ public class Keyboard {
                     .add(new Button("Справка", Button.SECONDARY), 1);
 
     /**
+     * Стартовая клавиатура (inline)
+     */
+    public static final Keyboard startInline =
+            new Keyboard()
+                    .add(new Button("Выбрать группу"), 0)
+                    .add(new Button("Справка", Button.SECONDARY), 1)
+                    .setInline(true);
+
+    /**
      * Стартовая клавиатура студента
      */
     public static final Keyboard student =
@@ -74,8 +83,16 @@ public class Keyboard {
                     .add(new Button("Выбрать группу", Button.SECONDARY), 1)
                     .add(new Button("Домой", Button.SECONDARY), 2);
 
+    public static final Keyboard whenUpdate
+            = new Keyboard()
+            .add(new Button("Завтра"))
+            .setInline(true);
+
     @JsonProperty("one_time")
     protected boolean oneTime = false;
+
+    @JsonProperty("inline")
+    protected boolean inline = false;
 
     @JsonProperty
     List<List<Button>> buttons = new ArrayList<>();
@@ -86,6 +103,11 @@ public class Keyboard {
     public Keyboard(boolean oneTime, List<List<Button>> buttons) {
         this.oneTime = oneTime;
         this.buttons = buttons;
+    }
+
+    public Keyboard setInline(boolean inline) {
+        this.inline = inline;
+        return this;
     }
 
     /**

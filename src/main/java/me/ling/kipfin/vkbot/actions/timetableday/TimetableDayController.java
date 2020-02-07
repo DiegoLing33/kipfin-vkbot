@@ -2,15 +2,20 @@ package me.ling.kipfin.vkbot.actions.timetableday;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
+import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
+import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -78,9 +83,15 @@ public class TimetableDayController extends TimetableController {
         int add = DateUtils.getLocalWeekDay(LocalDate.now()) == 4 ? 3 : 1;
         LocalDate date = this.testTomorrow(args) ? LocalDate.now().plus(add, ChronoUnit.DAYS) : LocalDate.now();
 
-        String dateString = DateUtils.toLocalDateString(date);
-        TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
-        TimetableDayModel model = new TimetableDayModel(state, master);
-        return model.getComponent().toString();
+        try {
+            String dateString = DateUtils.toLocalDateString(date);
+            TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
+            TimetableDayModel model = new TimetableDayModel(state, master);
+            return model.getComponent().toString();
+        } catch (NoSubjectsException ex) {
+            return new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
+                    .toString() + "\n\n" + BTAnswerType.NO_SUBJECTS.random(user.isTeacher())
+                    .replaceAll("\\{state}", state);
+        }
     }
 }

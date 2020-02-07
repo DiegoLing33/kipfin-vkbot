@@ -2,14 +2,18 @@ package me.ling.kipfin.vkbot.actions.timetablenow;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
+import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
+import me.ling.kipfin.vkbot.entities.BTAnswerType;
 import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -56,9 +60,15 @@ public class TimetableNowController extends TimetableController {
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
         LocalTime time = LocalTime.now();
 
-        String dateString = DateUtils.toLocalDateString(LocalDate.now());
-        TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
+        try {
+            String dateString = DateUtils.toLocalDateString(LocalDate.now());
+            TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
 
-        return TimetableNowModel.getTimetableNowDayComponent(state, time, master).toString();
+            return TimetableNowModel.getTimetableNowDayComponent(state, time, master).toString();
+        }catch (NoSubjectsException ex){
+            return new TimetableHeaderComponent(state, LocalDateTime.of(LocalDate.now(), time), true)
+                    .toString() + "\n\n" + BTAnswerType.NO_SUBJECTS.random(user.isTeacher())
+                    .replaceAll("\\{state}", state);
+        }
     }
 }
