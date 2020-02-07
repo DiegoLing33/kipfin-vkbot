@@ -52,8 +52,8 @@ public class BotValuesDB extends EntityDB<BotValue, DatabaseEntityNotFoundExcept
         var updates = statement.executeUpdate(
                 String.format("UPDATE bot_values SET `value`='%s' WHERE `kw`='%s' AND `type`='%s'", value.toString(), key, type));
         if (updates == 0) {
-             var result = statement.executeQuery(String.format("INSERT INTO bot_values (`kw`, `type`, `value`) VALUES ('%s', '%s', '%s')",
-                    key, type, value.toString())).rowInserted();
+             var result = statement.execute(String.format("INSERT INTO bot_values (`kw`, `type`, `value`) VALUES ('%s', '%s', '%s')",
+                    key, type, value.toString()));
              connection.close();
              return;
         }
