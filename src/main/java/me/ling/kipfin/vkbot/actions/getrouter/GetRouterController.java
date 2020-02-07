@@ -17,6 +17,7 @@ public class GetRouterController extends TimetableController {
 
     @Override
     public Object execute(String text, BTUser user, ControllerArgs args) {
+        this.checkUserState(user);
         GetRouterModel model = new GetRouterModel(user.getState());
         return model.getComponent().toString();
     }

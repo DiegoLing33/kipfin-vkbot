@@ -19,6 +19,7 @@ public class TimetableWeekController extends TimetableController {
 
     @Override
     protected Object execute(String text, BTUser user, ControllerArgs args) {
+        this.checkUserState(user);
         String state = BTUtils.getStateFromStringOrUser(args.getOrNull(0), user);
         if (BTUtils.isStateTeacher(state)) return new BTAnswerType("WEEK_TEACHER_NOT").random();
 

@@ -72,6 +72,7 @@ public class TimetableDayController extends TimetableController {
      */
     @Override
     public Object execute(String text, BTUser user, ControllerArgs args) {
+        this.checkUserState(user);
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
 
         int add = DateUtils.getLocalWeekDay(LocalDate.now()) == 4 ? 3 : 1;
