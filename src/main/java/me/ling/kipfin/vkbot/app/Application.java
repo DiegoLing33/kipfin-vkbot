@@ -3,7 +3,6 @@ package me.ling.kipfin.vkbot.app;
 import com.petersamokhin.bots.sdk.clients.Group;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.core.utils.StringUtils;
-import me.ling.kipfin.vkbot.actions.admin.broadcastupdate.BroadcastNewTimetable;
 import me.ling.kipfin.vkbot.actions.admin.broadcastupdate.BroadcastUpdateController;
 import me.ling.kipfin.vkbot.actions.admin.stat.StatController;
 import me.ling.kipfin.vkbot.controllers.AdditionalController;
@@ -30,10 +29,8 @@ import org.apache.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Приложение
@@ -76,7 +73,6 @@ public class Application extends WithLogger {
         CommandsRouter router = new CommandsRouter();
 
         router.addController(new BroadcastUpdateController());
-        router.addController(new BroadcastNewTimetable());
 
         router.addController(new HelpController());
         router.addController(new HomeController());
