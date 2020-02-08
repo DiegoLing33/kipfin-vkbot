@@ -30,7 +30,7 @@ import java.sql.SQLException;
  */
 public class Application extends WithLogger {
 
-    public static final String Version = "1.1 Maven Of Time (Build: 30t0)";
+    public static final String Version = "1.1 Maven Of Time (Build: 31t0)";
     protected final VKApiApplication vkApiApplication;
 
     /**

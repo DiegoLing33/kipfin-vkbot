@@ -12,6 +12,7 @@ import me.ling.kipfin.vkbot.utils.BTUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,14 @@ public class TimetableWeekController extends TimetableController {
         String state = BTUtils.getStateFromStringOrUser(args.getOrNull(0), user);
         if (BTUtils.isStateTeacher(state)) return new VKBotAnswer("WEEK_TEACHER_NOT").toTextMessage();
 
+        LocalDate date = LocalDate.now();
+        //todo - fix repeats
+        int localWeekDay = DateUtils.getLocalWeekDay(date);
+        if (localWeekDay == 5) date = date.plus(2, ChronoUnit.DAYS);
+        else if (localWeekDay == 6) date = date.plus(1, ChronoUnit.DAYS);
+
         var modal = new TimetableWeekModel(state,
-                TimetableManager.downloadOrGetCache(DateUtils.toLocalDateString(LocalDate.now())));
+                TimetableManager.downloadOrGetCache(DateUtils.toLocalDateString(date)));
         List<TextMessage> result = new ArrayList<>();
         for (int i = 0; i < 5; i++) result.add(modal.getMainComponent(i).toTextMessage());
         return new TextMessageButch(result);
