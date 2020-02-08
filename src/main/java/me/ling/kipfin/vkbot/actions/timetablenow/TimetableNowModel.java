@@ -10,7 +10,7 @@ import me.ling.kipfin.timetable.entities.ExtendedSubject;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.vkbot.actions.timetableday.TimetableDayComponent;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.messagecomponents.TextComponent;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.*;
@@ -33,8 +33,8 @@ public class TimetableNowModel {
         boolean isTeacher = BTUtils.isStateTeacher(state);
         AbstractAnalyzer<?> analyzer = isTeacher ? new TeacherAnalyzer(state, master) : new GroupAnalyzer(state, master);
 
-        if (!analyzer.isStarted(time)) return BTAnswerType.ITS_EARLY.random(isTeacher);
-        if (analyzer.isEnded(time)) return BTAnswerType.ITS_LATE.random(isTeacher);
+        if (!analyzer.isStarted(time)) return VKBotAnswer.ITS_EARLY.random(isTeacher);
+        if (analyzer.isEnded(time)) return VKBotAnswer.ITS_LATE.random(isTeacher);
         return null;
     }
 

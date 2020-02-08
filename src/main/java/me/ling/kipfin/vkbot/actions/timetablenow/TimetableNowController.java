@@ -4,13 +4,15 @@ import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
+import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKUser;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,7 +39,7 @@ public class TimetableNowController extends TimetableController {
      * @return - результат проверки
      */
     @Override
-    public boolean test(String text, BTUser user, ControllerArgs args) {
+    public boolean test(String text, VKUser user, ControllerArgs args) {
         return args.test("Сейчас") ||
                 (args.test("Сейчас") && BTUtils.checkTextIsState(String.join(" ", args)));
     }
@@ -54,21 +56,27 @@ public class TimetableNowController extends TimetableController {
      * @param args - аргументы контроллера
      * @return - ответ бота
      */
+    @NotNull
     @Override
-    public Object execute(String text, BTUser user, ControllerArgs args) {
+    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
         this.checkUserState(user);
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
         LocalTime time = LocalTime.now();
+
+        //todo - fix repeats
+        int localWeekDay = DateUtils.getLocalWeekDay(LocalDate.now());
+        if (localWeekDay == 5 || localWeekDay == 6) return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.now(), true)
+                .toString() + "\n\n" + "Выходной. Используйте расписание на завтра, чтобы получить информацию о ближайшем учебном дне.").applyTagValue("state", state);
 
         try {
             String dateString = DateUtils.toLocalDateString(LocalDate.now());
             TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
 
-            return TimetableNowModel.getTimetableNowDayComponent(state, time, master).toString();
+            return TimetableNowModel.getTimetableNowDayComponent(state, time, master).toTextMessage();
         }catch (NoSubjectsException ex){
-            return new TimetableHeaderComponent(state, LocalDateTime.of(LocalDate.now(), time), true)
-                    .toString() + "\n\n" + BTAnswerType.NO_SUBJECTS.random(user.isTeacher())
-                    .replaceAll("\\{state}", state);
+            //todo - fix repeats
+            return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(LocalDate.now(), time), true)
+                    .toString() + "\n\n" + VKBotAnswer.NO_SUBJECTS.random(user.isTeacher())).applyTagValue("state", state);
         }
     }
 }

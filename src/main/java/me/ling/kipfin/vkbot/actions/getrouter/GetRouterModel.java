@@ -3,7 +3,7 @@ package me.ling.kipfin.vkbot.actions.getrouter;
 import me.ling.kipfin.core.entities.university.Teacher;
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.database.university.TeachersDB;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 public class GetRouterModel {
@@ -39,9 +39,9 @@ public class GetRouterModel {
                     }
                 }
             }
-            return BTAnswerType.NO_ROUTING.random(BTUtils.isStateTeacher(this.getState()));
+            return VKBotAnswer.NO_ROUTING.random(BTUtils.isStateTeacher(this.getState()));
         } catch (Exception e) {
-            return BTAnswerType.NO_ROUTING.random(BTUtils.isStateTeacher(this.getState()));
+            return VKBotAnswer.NO_ROUTING.random(BTUtils.isStateTeacher(this.getState()));
         }
     }
 

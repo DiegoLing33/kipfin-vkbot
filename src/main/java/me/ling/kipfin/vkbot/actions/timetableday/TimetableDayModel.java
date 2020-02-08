@@ -8,7 +8,7 @@ import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.vkbot.app.MessageModel;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.messagecomponents.TextComponent;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.ClassroomComponent;
@@ -66,12 +66,12 @@ public class TimetableDayModel extends MessageModel {
         try {
             int firstIndex = this.getAbstractAnalyzer().getFirstIndex();
             if (firstIndex > 0)
-                return new BTAnswerType(String.format("%dD_SUB", firstIndex + 1)).random(this.isTeacher());
+                return new VKBotAnswer(String.format("%dD_SUB", firstIndex + 1)).random(this.isTeacher());
             return null;
         } catch (NoSubjectsException ex) {
-            return BTAnswerType.NO_SUBJECTS.random(isTeacher());
+            return VKBotAnswer.NO_SUBJECTS.random(isTeacher());
         } catch (NoTimetableOnDateException ex) {
-            return BTAnswerType.NO_TIMETABLE_AT_DATE.random(isTeacher());
+            return VKBotAnswer.NO_TIMETABLE_AT_DATE.random(isTeacher());
         }
     }
 
