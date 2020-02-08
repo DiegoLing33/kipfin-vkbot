@@ -1,14 +1,15 @@
 package me.ling.kipfin.vkbot.actions.timetableweek;
 
+import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.SubjectComponent;
 import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
-import me.ling.kipfin.vkbot.actions.timetableweek.TimetableWeekComponent;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 public class TimetableWeekModel {
@@ -22,7 +23,14 @@ public class TimetableWeekModel {
     }
 
     public TimetableWeekComponent getMainComponent(int dayIndex) {
-        LocalDate date = LocalDate.now().with(DayOfWeek.of(dayIndex + 1));
+
+        LocalDate date = LocalDate.now();
+        //todo - fix repeats
+        int localWeekDay = DateUtils.getLocalWeekDay(date);
+        if (localWeekDay == 5) date = date.plus(2, ChronoUnit.DAYS);
+        else if (localWeekDay == 6) date = date.plus(1, ChronoUnit.DAYS);
+
+        date = date.with(DayOfWeek.of(dayIndex + 1));
         LocalDateTime localDateTime = LocalDateTime.of(date, LocalTime.now());
         return new TimetableWeekComponent(
                 new TimetableHeaderComponent(this.group, localDateTime, false),

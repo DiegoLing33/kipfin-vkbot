@@ -60,7 +60,18 @@ public class KeyboardBuilder {
     /**
      * Стартовая клавиатура студента
      */
-    public static final Keyboard inStateHomeKeyboard = new Keyboard()
+    public static final Keyboard studentHomeKeyboard = new Keyboard()
+            .setOneTime(false)
+            .setButtons(List.of(
+                    List.of(Buttons.todayButton, Buttons.tomorrowButton),
+                    List.of(Buttons.nowButton),
+                    List.of(Buttons.weekButton),
+                    List.of(Buttons.addictionButton)
+            ));
+    /**
+     * Стартовая клавиатура студента
+     */
+    public static final Keyboard teacherHomeKeyboard = new Keyboard()
             .setOneTime(false)
             .setButtons(List.of(
                     List.of(Buttons.todayButton, Buttons.tomorrowButton),
@@ -87,7 +98,6 @@ public class KeyboardBuilder {
     public static final Keyboard addictionStudentKeyboard = new Keyboard()
             .setOneTime(false)
             .setButtons(List.of(
-                    List.of(Buttons.weekButton),
                     List.of(Buttons.getRouterButton),
                     List.of(Buttons.selectGroupSecondaryButton, Buttons.helpButton),
                     List.of(Buttons.homeButton)

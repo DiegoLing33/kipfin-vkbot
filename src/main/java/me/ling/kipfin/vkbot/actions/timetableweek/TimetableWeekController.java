@@ -31,6 +31,7 @@ public class TimetableWeekController extends TimetableController {
         if (BTUtils.isStateTeacher(state)) return new VKBotAnswer("WEEK_TEACHER_NOT").toTextMessage();
 
         LocalDate date = LocalDate.now();
+
         //todo - fix repeats
         int localWeekDay = DateUtils.getLocalWeekDay(date);
         if (localWeekDay == 5) date = date.plus(2, ChronoUnit.DAYS);

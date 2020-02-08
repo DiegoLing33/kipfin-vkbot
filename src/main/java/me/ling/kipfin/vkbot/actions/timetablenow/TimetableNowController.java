@@ -26,17 +26,16 @@ public class TimetableNowController extends TimetableController {
 
     /**
      * Тестирует контрллер
-     *
+     * <p>
      * Данный метод является главным в контроллере - он отвечает за роутинг. Если данный метод возвращает
      * значение true, будет запущен метод Controller::execute данного класса.
-     *
-     * @warning метод `Controller::execute` данного класса НИКОГДА не будет запущен, кроме случаев, когда
-     *   `Controller::test` возвращает true. <b>Нет необходимости делнть двойные проверки</b>!
      *
      * @param text - полученный текст
      * @param user - пользователь
      * @param args - аргументы
      * @return - результат проверки
+     * @warning метод `Controller::execute` данного класса НИКОГДА не будет запущен, кроме случаев, когда
+     * `Controller::test` возвращает true. <b>Нет необходимости делнть двойные проверки</b>!
      */
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
@@ -46,15 +45,15 @@ public class TimetableNowController extends TimetableController {
 
     /**
      * Выполняет метод и возвращает ответ
-     *
+     * <p>
      * Данный метод выполняется только после выполнения метода `Controller::test`!
-     * @see MessageController
-     * @see MessageController ::test
      *
      * @param text - текст
      * @param user - пользователь
      * @param args - аргументы контроллера
      * @return - ответ бота
+     * @see MessageController
+     * @see MessageController ::test
      */
     @NotNull
     @Override
@@ -65,15 +64,16 @@ public class TimetableNowController extends TimetableController {
 
         //todo - fix repeats
         int localWeekDay = DateUtils.getLocalWeekDay(LocalDate.now());
-        if (localWeekDay == 5 || localWeekDay == 6) return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.now(), true)
-                .toString() + "\n\n" + "Выходной. Используйте расписание на завтра, чтобы получить информацию о ближайшем учебном дне.").applyTagValue("state", state);
+        if (localWeekDay == 5 || localWeekDay == 6)
+            return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.now(), true)
+                    .toString() + "\n\n" + VKBotAnswer.WEEKENDS.toTextMessage(BTUtils.isStateTeacher(state))).applyTagValue("state", state);
 
         try {
             String dateString = DateUtils.toLocalDateString(LocalDate.now());
             TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
 
             return TimetableNowModel.getTimetableNowDayComponent(state, time, master).toTextMessage();
-        }catch (NoSubjectsException ex){
+        } catch (NoSubjectsException ex) {
             //todo - fix repeats
             return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(LocalDate.now(), time), true)
                     .toString() + "\n\n" + VKBotAnswer.NO_SUBJECTS.random(user.isTeacher())).applyTagValue("state", state);

@@ -83,16 +83,10 @@ public class TimetableDayController extends TimetableController {
         String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
         LocalDate date = this.testTomorrow(args) ? LocalDate.now().plus(1, ChronoUnit.DAYS) : LocalDate.now();
 
-        //todo - fix repeats
         int localWeekDay = DateUtils.getLocalWeekDay(date);
-        if (this.testTomorrow(args)) {
-            if (localWeekDay == 5) date = date.plus(2, ChronoUnit.DAYS);
-            else if (localWeekDay == 6) date = date.plus(1, ChronoUnit.DAYS);
-        } else {
-            if (localWeekDay == 5 || localWeekDay == 6)
-                return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
-                        .toString() + "\n\n" + "Выходной. Используйте расписание на завтра, чтобы получить информацию о ближайшем учебном дне.").applyTagValue("state", state);
-        }
+        if (localWeekDay == 5 || localWeekDay == 6)
+            return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
+                    .toString() + "\n\n" + VKBotAnswer.WEEKENDS.toTextMessage(BTUtils.isStateTeacher(state))).applyTagValue("state", state);
 
         try {
             String dateString = DateUtils.toLocalDateString(date);
@@ -101,12 +95,7 @@ public class TimetableDayController extends TimetableController {
             return model.getComponent().toTextMessage();
         } catch (NoSubjectsException ex) {
             //todo - fix repeats
-            String message = "";
-
-            if (this.testTomorrow(args) && (localWeekDay == 5 || localWeekDay == 6))
-                message += VKBotAnswer.WEEKENDS_BUT_MONDAY.random() + "\n";
-
-            message += new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
+            String message = new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
                     .toString() + "\n\n" + VKBotAnswer.NO_SUBJECTS.random(user.isTeacher());
             return new TextMessage(message).applyTagValue("state", state);
         }

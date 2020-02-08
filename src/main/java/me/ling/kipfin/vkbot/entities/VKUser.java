@@ -127,8 +127,8 @@ public class VKUser extends WithLogger {
             this.state = value != null ? value : "";
         }
 
-        if (this.isStudent() || this.isTeacher())
-            this.keyboard = KeyboardBuilder.inStateHomeKeyboard;
+        if (this.isStudent()) this.keyboard = KeyboardBuilder.studentHomeKeyboard;
+        if (this.isTeacher()) this.keyboard = KeyboardBuilder.teacherHomeKeyboard;
     }
 
     /**
