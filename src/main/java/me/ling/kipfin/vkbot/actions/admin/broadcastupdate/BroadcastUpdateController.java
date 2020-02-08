@@ -8,6 +8,7 @@ import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.BroadcastMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.utils.ResourceManager;
 import me.ling.kipfin.vkbot.utils.images.LandingImage;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,12 +34,11 @@ public class BroadcastUpdateController extends MessageController {
                     "6. Переделано меню. Теперь у Вас под рукой нет ничего лишнего.\n\n" +
                     "7. Изменена логика функции \"расписание на завтра\". Чтобы не загружать студентов лишней информацией, расписание " +
                     "на завтра не отображается до момента публикации. Если Вы хотите смоделировать какие-то планы, используйте \"расписание на неделю\".\n\n";
-            return new BroadcastMessage(message, List.of(49062753),
-                    this.getClass().getResource("/moft.jpg").getPath(), KeyboardBuilder.startInlineKeyboard);
+            return new BroadcastMessage(message, List.of(49062753), ResourceManager.get("moft.jpg"), KeyboardBuilder.startInlineKeyboard);
         } else if (arg.equals("day") && args.hasArg(1) && DateUtils.isStringDateInLocalFormat(args.get(1))) {
             String dateString = args.get(1);
             return new BroadcastMessage("@УчебнаяЧастьКИПФИН:\n\nРасписание на " + dateString +
-                    " обновлено!", List.of(49062753), new LandingImage(dateString).getImage().getPath(), KeyboardBuilder.whenTimetableUpdateInlineKeyboard);
+                    " обновлено!", List.of(49062753), new LandingImage(dateString).getImage(), KeyboardBuilder.whenTimetableUpdateInlineKeyboard);
         }
         return VKBotAnswer.UNKNOWN_COMMAND.toTextMessage();
     }

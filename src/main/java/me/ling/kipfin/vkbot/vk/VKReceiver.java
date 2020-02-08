@@ -31,7 +31,7 @@ public class VKReceiver extends CallbackApiLongPoll {
      * @param vkApiApplication - объект VK приложения
      */
     public VKReceiver(VKApiApplication vkApiApplication) {
-        super(vkApiApplication.getVk(), vkApiApplication.getActor(), vkApiApplication.getGroupId());
+        super(vkApiApplication.getVk(), vkApiApplication.getActor(), 30);
         this.vkApiApplication = vkApiApplication;
     }
 

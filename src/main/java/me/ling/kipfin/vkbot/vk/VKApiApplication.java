@@ -52,7 +52,7 @@ public class VKApiApplication extends WithLogger {
         while (true) {
             try {
                 this.getReceiver().run(); // Запускает приемник -- и так каждыйй раз
-            }catch (ClientException e){
+            }catch (ClientException e ){
                 Thread.sleep(10000);
             }
         }

@@ -46,7 +46,7 @@ public class TimetableWeekController extends TimetableController {
             subs += component.getSubjectComponents().size();
             result.add(component.toTextMessage());
         }
-        if (subs == 0) return VKBotAnswer.WEEKENDS_BUT_MONDAY.toTextMessage()
+        if (subs == 0) return VKBotAnswer.WEEK_NO_SUBJECTS.toTextMessage()
                 .applyTagValue("date", DateUtils.toLocalDateString(date));
         return new TextMessageButch(result);
     }

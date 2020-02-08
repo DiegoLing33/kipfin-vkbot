@@ -12,7 +12,6 @@ import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessageButch;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.stream.Collectors;
 
 /**
@@ -99,7 +98,7 @@ public class VKMessenger extends WithLogger {
         var vk = getVkApiApplication().getVk();
         if (message.getImage() != null) {
             var uploader = vk.photos().getMessagesUploadServer(actor).peerId(user.getUserId()).execute();
-            var response = vk.upload().photoMessage(uploader.getUploadUrl().toString(), new File(message.getImage())).execute();
+            var response = vk.upload().photoMessage(uploader.getUploadUrl().toString(), message.getImage()).execute();
             var photos = vk.photos().saveMessagesPhoto(actor, response.getPhoto())
                     .server(response.getServer()).hash(response.getHash()).execute();
             query.attachment(photos.stream().map(photo -> String.format("photo%s_%s", photos.get(0).getOwnerId().toString(),

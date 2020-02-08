@@ -4,7 +4,9 @@ import io.github.cdimascio.dotenv.Dotenv;
 import me.ling.kipfin.core.Bootloader;
 import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.Application;
+import me.ling.kipfin.vkbot.utils.ResourceManager;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -15,7 +17,7 @@ public class Main {
      *
      * @param args - аргументы
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
 
         // Загрузка стартовых данных. Библиотека kipfin.core
         Dotenv dotenv = Dotenv.load();
@@ -26,6 +28,11 @@ public class Main {
         // Получение актуальных данных из .env
         Integer groupId = Integer.parseInt(Objects.requireNonNull(dotenv.get("vk.group_id")));
         String token = dotenv.get("vk.token");
+
+        // Распаковка ресурсов
+        ResourceManager.unpack("moft.jpg");
+        ResourceManager.unpack("next_day.jpg");
+        ResourceManager.unpack("welcome.jpg");
 
         // Созданеи и запуск приложения бота
         Application application = new Application(groupId, token);

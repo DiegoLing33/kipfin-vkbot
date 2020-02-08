@@ -10,6 +10,7 @@ import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.exceptions.StateNotSetException;
+import me.ling.kipfin.vkbot.utils.ResourceManager;
 
 /**
  * Контроллер для расписания (В нем содержится обработка исключений)
@@ -38,7 +39,7 @@ public abstract class TimetableController extends MessageController {
         } catch (StateNotSetException ex) {
             return new ImagedTextMessage(VKBotAnswer.HOME_UNDEFINED.random(),
                     KeyboardBuilder.startInlineKeyboard,
-                    this.getClass().getResource("/hi.jpg").getPath());
+                    ResourceManager.get("welcome.jpg"));
         } catch (Exception ex) {
             ex.printStackTrace();
             return VKBotAnswer.SOMETHING_WENT_WRONG.toTextMessage();
