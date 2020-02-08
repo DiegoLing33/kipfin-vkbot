@@ -1,6 +1,8 @@
 package me.ling.kipfin.vkbot.app;
 
-import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.VKUser;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -24,7 +26,7 @@ public abstract class MessageController {
      * @param args - аргументы
      * @return - результат проверки
      */
-    public abstract boolean test(String text, BTUser user, ControllerArgs args);
+    public abstract boolean test(String text, VKUser user, ControllerArgs args);
 
     /**
      * Выполняет метод и возвращает ответ
@@ -38,7 +40,8 @@ public abstract class MessageController {
      * @param args - аргументы контроллера
      * @return - ответ бота
      */
-    protected abstract Object execute(String text, BTUser user, ControllerArgs args);
+    @NotNull
+    protected abstract TextMessage execute(String text, VKUser user, ControllerArgs args);
 
     /**
      * Запрашивает исполнение
@@ -49,7 +52,7 @@ public abstract class MessageController {
      * @return      - возвращает ответ контроллера или null
      */
     @Nullable
-    public Object requestExecute(String text, BTUser user, ControllerArgs args) {
+    public TextMessage requestExecute(String text, VKUser user, ControllerArgs args) {
         if (this.test(text, user, args))
             return execute(text, user, args);
         return null;

@@ -1,9 +1,10 @@
 package me.ling.kipfin.vkbot.app;
 
 import me.ling.kipfin.core.log.WithLogger;
-import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKUser;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,20 +52,20 @@ public class CommandsRouter extends WithLogger {
      *
      * @param text   - текст
      * @param btUser - пользователь
-     * @return - ответ или null
+     * @return - ответ
      * @warning В данном методе нет необходимости выполнять проверки, так как метод гарантированно не будет запущен,
      * если test не прошел!
      */
-    @Nullable
-    public Object execute(String text, @NotNull BTUser btUser) {
+    @NotNull
+    public TextMessage execute(String text, @NotNull VKUser btUser) {
         this.log(btUser.getUserId(), text);
         ControllerArgs args = CommandsRouter.getArgsFromStringWithNoMainArg(text);
 
         for (MessageController controller : this.controllers) {
-            Object response = controller.requestExecute(text, btUser, args);
+            TextMessage response = controller.requestExecute(text, btUser, args);
             if (response != null) return response;
         }
-        return null;
+        return VKBotAnswer.UNKNOWN_COMMAND.toTextMessage();
     }
 
     /**
