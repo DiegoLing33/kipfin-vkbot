@@ -1,12 +1,15 @@
 package me.ling.kipfin.vkbot.entities;
 
-import com.petersamokhin.bots.sdk.clients.Client;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
+import com.vk.api.sdk.objects.messages.Keyboard;
+import com.vk.api.sdk.objects.users.Fields;
 import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
-import me.ling.kipfin.vkbot.utils.BotUserUtils;
+import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
-import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
 import me.ling.kipfin.vkbot.enums.BotUserSex;
+import me.ling.kipfin.vkbot.vk.VKApiApplication;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,17 +20,17 @@ import java.util.Map;
 /**
  * Бот
  */
-public class BTUser extends WithLogger {
+public class VKUser extends WithLogger {
 
     /**
      * Преобразует строку шаблона в строку
      *
      * @param template - шаблон
-     * @param BTUser  - пользователь
+     * @param BTUser   - пользователь
      * @return - реализованный шаблон
      */
     @NotNull
-    public static String template(String template, BTUser BTUser) {
+    public static String template(String template, VKUser BTUser) {
         return template
                 .replaceAll("\\{name}", BTUser.getName())
                 .replaceAll("\\{id}", BTUser.getUserId().toString())
@@ -39,18 +42,18 @@ public class BTUser extends WithLogger {
     /**
      * Сохраненные в памяти польователи
      */
-    protected static final Map<Integer, BTUser> users = new HashMap<>();
+    protected static final Map<Integer, VKUser> users = new HashMap<>();
 
     /**
      * Возвращает ссылку на пользователя
      *
-     * @param client - API
-     * @param userId - ID пользователя
+     * @param vkApiApplication - API
+     * @param userId           - ID пользователя
      * @return - ссылка на пользователя
      */
-    public static BTUser getInstance(Client client, Integer userId) {
+    public static VKUser getInstance(VKApiApplication vkApiApplication, Integer userId) {
         Logger.log("Получение информации про ID", userId, "...");
-        if (!users.containsKey(userId)) new BTUser(client, userId);
+        if (!users.containsKey(userId)) new VKUser(vkApiApplication, userId);
         return users.get(userId);
     }
 
@@ -61,23 +64,28 @@ public class BTUser extends WithLogger {
     protected BotUserSex sex = BotUserSex.MALE;
 
     @NotNull
-    protected Keyboard keyboard = Keyboard.start;
+    protected Keyboard keyboard = KeyboardBuilder.startKeyboard;
 
     /**
      * Контруктор
      *
      * @param userId - идентификатор пользователя
      */
-    public BTUser(Client client, Integer userId) {
+    public VKUser(VKApiApplication vkApiApplication, Integer userId) {
         super("BotUser#" + userId);
-        var info = BotUserUtils.getUserInfo(userId, client.getAccessToken());
-
+        String name = "Тайна";
+        try {
+            var values = vkApiApplication.getVk().users().get(vkApiApplication.getActor())
+                    .userIds(String.valueOf(userId)).fields(Fields.SEX).execute();
+            name = values.get(0).getFirstName();
+            this.setSex(values.get(0).getSex().ordinal());
+        } catch (ApiException | ClientException e) {
+            e.printStackTrace();
+        }
+        this.name = name;
         this.userId = userId;
-        this.name = info.optString("first_name", "Петя");
-        this.setSex(info.optInt("sex", 1));
-
         this.log("Создание нового пользователя:", this.name);
-        if (!BTUser.users.containsKey(userId)) BTUser.users.put(userId, this);
+        if (!VKUser.users.containsKey(userId)) VKUser.users.put(userId, this);
         this.reload();
     }
 
@@ -119,8 +127,8 @@ public class BTUser extends WithLogger {
             this.state = value != null ? value : "";
         }
 
-        if (this.isStudent()) this.keyboard = Keyboard.student;
-        if (this.isTeacher()) this.keyboard = Keyboard.teacher;
+        if (this.isStudent() || this.isTeacher())
+            this.keyboard = KeyboardBuilder.inStateHomeKeyboard;
     }
 
     /**
@@ -193,7 +201,6 @@ public class BTUser extends WithLogger {
     public String getName() {
         return name;
     }
-
 
 
     /**

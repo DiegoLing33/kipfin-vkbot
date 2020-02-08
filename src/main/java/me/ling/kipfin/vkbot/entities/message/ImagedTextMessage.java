@@ -1,6 +1,6 @@
 package me.ling.kipfin.vkbot.entities.message;
 
-import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
+import com.vk.api.sdk.objects.messages.Keyboard;
 import org.jetbrains.annotations.Nullable;
 
 public class ImagedTextMessage extends TextMessage {
