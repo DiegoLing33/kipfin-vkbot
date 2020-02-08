@@ -2,7 +2,6 @@ package me.ling.kipfin.vkbot.controllers;
 
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
-import me.ling.kipfin.vkbot.Main;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
@@ -39,7 +38,7 @@ public abstract class TimetableController extends MessageController {
         } catch (StateNotSetException ex) {
             return new ImagedTextMessage(VKBotAnswer.HOME_UNDEFINED.random(),
                     KeyboardBuilder.startInlineKeyboard,
-                    Main.class.getResource("/hi.jpg").getPath());
+                    this.getClass().getResource("/hi.jpg").getPath());
         } catch (Exception ex) {
             ex.printStackTrace();
             return VKBotAnswer.SOMETHING_WENT_WRONG.toTextMessage();

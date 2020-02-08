@@ -40,7 +40,14 @@ public class TimetableWeekController extends TimetableController {
         var modal = new TimetableWeekModel(state,
                 TimetableManager.downloadOrGetCache(DateUtils.toLocalDateString(date)));
         List<TextMessage> result = new ArrayList<>();
-        for (int i = 0; i < 5; i++) result.add(modal.getMainComponent(i).toTextMessage());
+        int subs = 0;
+        for (int i = 0; i < 5; i++) {
+            var component = modal.getMainComponent(i);
+            subs += component.getSubjectComponents().size();
+            result.add(component.toTextMessage());
+        }
+        if (subs == 0) return VKBotAnswer.WEEKENDS_BUT_MONDAY.toTextMessage()
+                .applyTagValue("date", DateUtils.toLocalDateString(date));
         return new TextMessageButch(result);
     }
 }
