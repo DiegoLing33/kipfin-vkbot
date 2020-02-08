@@ -86,7 +86,7 @@ public class TimetableDayController extends TimetableController {
         int localWeekDay = DateUtils.getLocalWeekDay(date);
         if (localWeekDay == 5 || localWeekDay == 6)
             return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
-                    .toString() + "\n\n" + VKBotAnswer.WEEKENDS.toTextMessage(BTUtils.isStateTeacher(state))).applyTagValue("state", state);
+                    .toString() + "\n\n" + VKBotAnswer.WEEKENDS.random(BTUtils.isStateTeacher(state))).applyTagValue("state", state);
 
         try {
             String dateString = DateUtils.toLocalDateString(date);
