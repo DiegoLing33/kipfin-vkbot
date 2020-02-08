@@ -1,14 +1,17 @@
 package me.ling.kipfin.vkbot.controllers.group;
 
+import com.vk.api.sdk.objects.messages.Keyboard;
+import com.vk.api.sdk.objects.messages.KeyboardButton;
 import me.ling.kipfin.core.entities.university.UniversityGroup;
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
+import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
-import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.app.MessageController;
-import me.ling.kipfin.vkbot.entities.keboard.Button;
-import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
+import me.ling.kipfin.vkbot.entities.VKUser;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -19,18 +22,19 @@ import java.util.stream.Collectors;
 public class SelectGroupNextController extends TimetableController {
 
     @Override
-    public boolean test(String text, BTUser user, ControllerArgs args) {
+    public boolean test(String text, VKUser user, ControllerArgs args) {
         return this.testAlias(text, "1 курс", "2 курс", "3 курс", "4 курс");
     }
 
+    @NotNull
     @Override
-    public Object execute(String text, BTUser user, ControllerArgs args) {
+    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
         String first = text.substring(0, 1);
         List<String> groups = GroupsDB.shared.getCache().values().stream()
                 .filter(universityGroup -> universityGroup.getTitle().substring(0, 1).equals(first))
                 .map(UniversityGroup::getTitle).collect(Collectors.toCollection(Stack::new));
         user.setKeyboard(this.getKeyboard(groups));
-        return "Выберите группу ⚡️";
+        return new TextMessage("Выберите группу ⚡️");
     }
 
     /**
@@ -40,14 +44,20 @@ public class SelectGroupNextController extends TimetableController {
      * @return - клавиатур
      */
     protected Keyboard getKeyboard(List<String> strings) {
-        Keyboard keyboard = new Keyboard();
+        Keyboard keyboard = new Keyboard().setOneTime(false);
+        List<List<KeyboardButton>> buttons = new ArrayList<>();
+        List<KeyboardButton> buttonsRow = new ArrayList<>();
         int row = 0;
         for (int i = 0; i < strings.size(); i += 2) {
-            keyboard.add(new Button(strings.get(i)), row);
-            if (i + 1 < strings.size()) keyboard.add(new Button(strings.get(i + 1)), row);
-            row++;
+            buttonsRow.add(KeyboardBuilder.Buttons.createTextButton(strings.get(i)));
+            if (i + 1 < strings.size()){
+                buttonsRow.add(KeyboardBuilder.Buttons.createTextButton(strings.get(i + 1)));
+            }
+            buttons.add(buttonsRow);
+            buttonsRow = new ArrayList<>();
         }
-        keyboard.add(new Button("Домой", Button.SECONDARY), row);
-        return keyboard;
+        buttons.add(List.of(KeyboardBuilder.Buttons.homeButton));
+
+        return keyboard.setButtons(buttons);
     }
 }

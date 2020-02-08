@@ -2,14 +2,15 @@ package me.ling.kipfin.vkbot.controllers;
 
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
-import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.Main;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.entities.keboard.Keyboard;
+import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.exceptions.StateNotSetException;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Контроллер для расписания (В нем содержится обработка исключений)
@@ -22,27 +23,26 @@ public abstract class TimetableController extends MessageController {
      * @param user - пользователь
      * @throws StateNotSetException - исключение отсутсвия состояния
      */
-    public void checkUserState(BTUser user) throws StateNotSetException {
+    public void checkUserState(VKUser user) throws StateNotSetException {
         if (user == null || user.getState().isEmpty() || user.getState().isBlank())
             throw new StateNotSetException();
     }
 
-    @Nullable
     @Override
-    public Object requestExecute(String text, BTUser user, ControllerArgs args) {
+    public TextMessage requestExecute(String text, VKUser user, ControllerArgs args) {
         try {
             return super.requestExecute(text, user, args);
         } catch (NoTimetableOnDateException ex) {
-            return BTAnswerType.NO_TIMETABLE_AT_DATE.random();
+            return VKBotAnswer.NO_TIMETABLE_AT_DATE.toTextMessage();
         } catch (NoSubjectsException ex) {
-            return BTAnswerType.NO_SUBJECTS.random(user.isTeacher());
+            return VKBotAnswer.NO_SUBJECTS.toTextMessage(user.isTeacher());
         } catch (StateNotSetException ex) {
-            return new ImagedTextMessage(BTAnswerType.HOME_UNDEFINED.random(),
-                    Keyboard.startInline,
-                    TimetableController.class.getResource("/hi.jpg").toString());
+            return new ImagedTextMessage(VKBotAnswer.HOME_UNDEFINED.random(),
+                    KeyboardBuilder.startInlineKeyboard,
+                    Main.class.getResource("/hi.jpg").getPath());
         } catch (Exception ex) {
             ex.printStackTrace();
-            return BTAnswerType.SOMETHING_WENT_WRONG.random();
+            return VKBotAnswer.SOMETHING_WENT_WRONG.toTextMessage();
         }
     }
 }

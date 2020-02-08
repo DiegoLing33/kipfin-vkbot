@@ -1,21 +1,24 @@
 package me.ling.kipfin.vkbot.controllers;
 
 import me.ling.kipfin.vkbot.app.ControllerArgs;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKUser;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import org.jetbrains.annotations.NotNull;
 
 public class HomeController extends TimetableController {
     @Override
-    public boolean test(String text, BTUser user, ControllerArgs args) {
+    public boolean test(String text, VKUser user, ControllerArgs args) {
         return args.test("Домой", "Начать", "/start", "Начало");
     }
 
+    @NotNull
     @Override
-    public Object execute(String text, BTUser user, ControllerArgs args) {
+    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
         user.reload();
-        if (user.isStudent() || user.isTeacher()) return BTAnswerType.HOME.random(user.isTeacher());
+        if (user.isStudent() || user.isTeacher()) return VKBotAnswer.HOME.toTextMessage(user.isTeacher());
         this.checkUserState(user);
-        return null;
+        return VKBotAnswer.HOME_UNDEFINED.toTextMessage().setKeyboard(KeyboardBuilder.startInlineKeyboard);
     }
 }

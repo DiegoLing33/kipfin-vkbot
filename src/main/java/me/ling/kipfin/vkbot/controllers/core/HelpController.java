@@ -3,22 +3,27 @@ package me.ling.kipfin.vkbot.controllers.core;
 import me.ling.kipfin.vkbot.app.Application;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.entities.BTUser;
-import me.ling.kipfin.vkbot.entities.BotAnswer;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKUser;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.TextMessageButch;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class HelpController extends TimetableController {
     @Override
-    public boolean test(String text, BTUser user, ControllerArgs args) {
-        return this.testAlias(text,"справка", "помощь");
+    public boolean test(String text, VKUser user, ControllerArgs args) {
+        return this.testAlias(text, "справка", "помощь");
     }
 
+    @NotNull
     @Override
-    protected Object execute(String text, BTUser user, ControllerArgs args) {
-        return new String[]{
-                new BTAnswerType("HELP_p1").random(),
-                new BTAnswerType("HELP_p2").random(),
-                new BTAnswerType("HELP_p3").random() + "\n\n" + Application.Version
-        };
+    protected TextMessage execute(String text, VKUser user, ControllerArgs args) {
+        return new TextMessageButch(List.of(
+                new VKBotAnswer("HELP_p1").toTextMessage(),
+                new VKBotAnswer("HELP_p2").toTextMessage(),
+                new TextMessage(new VKBotAnswer("HELP_p3").random() + "\n\n" + Application.Version)));
     }
+
 }

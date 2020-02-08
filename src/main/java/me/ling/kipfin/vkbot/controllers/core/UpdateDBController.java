@@ -5,9 +5,11 @@ import me.ling.kipfin.database.university.TeachersDB;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
-import me.ling.kipfin.vkbot.entities.BTAnswerType;
-import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 
@@ -17,13 +19,14 @@ import java.sql.SQLException;
 public class UpdateDBController extends MessageController {
 
     @Override
-    public boolean test(String text, BTUser user, ControllerArgs args) {
+    public boolean test(String text, VKUser user, ControllerArgs args) {
         return user.isAdmin() && args.test("/update-db");
     }
 
+    @NotNull
     @Override
-    public Object execute(String text, BTUser user, ControllerArgs args) {
-        if(!user.isAdmin()) return BTAnswerType.DENY_PERMISSIONS.random();
+    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
+        if(!user.isAdmin()) return VKBotAnswer.DENY_PERMISSIONS.toTextMessage();
         try {
             GroupsDB.shared.update();
             TeachersDB.shared.update();
@@ -32,6 +35,6 @@ public class UpdateDBController extends MessageController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "Базы данных обновлены 🕺🏼";
+        return new TextMessage( "Базы данных обновлены 🕺🏼");
     }
 }
