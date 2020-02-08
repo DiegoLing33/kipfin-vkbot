@@ -2,7 +2,7 @@ package me.ling.kipfin.vkbot.utils;
 
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.database.university.TeachersDB;
-import me.ling.kipfin.vkbot.entities.BTUser;
+import me.ling.kipfin.vkbot.entities.VKUser;
 import org.jetbrains.annotations.Nullable;
 
 public final class BTUtils {
@@ -44,7 +44,7 @@ public final class BTUtils {
      * @param user   - пользователь
      * @return - состояние
      */
-    public static String getStateFromStringOrUser(@Nullable String source, BTUser user) {
+    public static String getStateFromStringOrUser(@Nullable String source, VKUser user) {
         String state = BTUtils.getStateFromTextOrNull(source);
         return state == null ? user.getState() : state;
     }
