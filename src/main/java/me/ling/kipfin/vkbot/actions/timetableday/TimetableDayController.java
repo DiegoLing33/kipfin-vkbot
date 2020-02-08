@@ -4,8 +4,8 @@ import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
+import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
@@ -85,12 +85,13 @@ public class TimetableDayController extends TimetableController {
 
         //todo - fix repeats
         int localWeekDay = DateUtils.getLocalWeekDay(date);
-        if(this.testTomorrow(args)) {
+        if (this.testTomorrow(args)) {
             if (localWeekDay == 5) date = date.plus(2, ChronoUnit.DAYS);
             else if (localWeekDay == 6) date = date.plus(1, ChronoUnit.DAYS);
-        }else{
-            if (localWeekDay == 5 || localWeekDay == 6) return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
-                    .toString() + "\n\n" + "Выходной. Используйте расписание на завтра, чтобы получить информацию о ближайшем учебном дне.").applyTagValue("state", state);
+        } else {
+            if (localWeekDay == 5 || localWeekDay == 6)
+                return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
+                        .toString() + "\n\n" + "Выходной. Используйте расписание на завтра, чтобы получить информацию о ближайшем учебном дне.").applyTagValue("state", state);
         }
 
         try {
@@ -100,8 +101,14 @@ public class TimetableDayController extends TimetableController {
             return model.getComponent().toTextMessage();
         } catch (NoSubjectsException ex) {
             //todo - fix repeats
-            return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
-                    .toString() + "\n\n" + VKBotAnswer.NO_SUBJECTS.random(user.isTeacher())).applyTagValue("state", state);
+            String message = "";
+
+            if (this.testTomorrow(args) && (localWeekDay == 5 || localWeekDay == 6))
+                message += VKBotAnswer.WEEKENDS_BUT_MONDAY.random() + "\n";
+
+            message += new TimetableHeaderComponent(state, LocalDateTime.of(date, LocalTime.now()), false)
+                    .toString() + "\n\n" + VKBotAnswer.NO_SUBJECTS.random(user.isTeacher());
+            return new TextMessage(message).applyTagValue("state", state);
         }
     }
 }

@@ -33,6 +33,8 @@ public final class VKBotAnswer {
     public final static VKBotAnswer SOMETHING_WENT_WRONG = new VKBotAnswer("SMT_WNT_WRONG");
     public final static VKBotAnswer UNKNOWN_COMMAND = new VKBotAnswer("UNK_CMD");
 
+    public final static VKBotAnswer WEEKENDS_BUT_MONDAY = new VKBotAnswer("WKNDS_BUT_MON");
+
     /**
      * Возвращает случайнй ответ по типу
      *
