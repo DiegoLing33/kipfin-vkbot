@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class Application extends WithLogger {
 
-    public static final String Version = "1.1 Maven Of Time (Build: 31t53)";
+    public static final String Version = "1.1 Maven Of Time (Build: 32t71)";
     protected final VKApiApplication vkApiApplication;
 
     /**
