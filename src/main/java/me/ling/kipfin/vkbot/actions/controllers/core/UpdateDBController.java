@@ -1,7 +1,8 @@
-package me.ling.kipfin.vkbot.controllers.core;
+package me.ling.kipfin.vkbot.actions.controllers.core;
 
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.database.university.TeachersDB;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
@@ -16,11 +17,12 @@ import java.sql.SQLException;
 /**
  * Обновление баз данных
  */
+@BTController
 public class UpdateDBController extends MessageController {
 
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
-        return user.isAdmin() && args.test("/update-db");
+        return user.isAdmin() && args.testMainArg("/update-db");
     }
 
     @NotNull

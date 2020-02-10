@@ -1,6 +1,7 @@
 package me.ling.kipfin.vkbot.actions.admin.broadcastupdate;
 
 import me.ling.kipfin.core.utils.DateUtils;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
@@ -9,11 +10,11 @@ import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.BroadcastMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.utils.ResourceManager;
-import me.ling.kipfin.vkbot.utils.images.LandingImage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@BTController
 public class BroadcastUpdateController extends MessageController {
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
@@ -31,14 +32,13 @@ public class BroadcastUpdateController extends MessageController {
                     "3. Расписание \"на следующую неделю\" больше не отображается ввиду несостыковок с электронным журналом.\n\n" +
                     "4. Новое отображение расписания на неделю (мы вас услышали).\n\n" +
                     "5. Изменена справка.\n\n" +
-                    "6. Переделано меню. Теперь у Вас под рукой нет ничего лишнего.\n\n" +
-                    "7. Изменена логика функции \"расписание на завтра\". Чтобы не загружать студентов лишней информацией, расписание " +
+                    "6. Изменена логика функции \"расписание на завтра\". Чтобы не загружать студентов лишней информацией, расписание " +
                     "на завтра не отображается до момента публикации. Если Вы хотите смоделировать какие-то планы, используйте \"расписание на неделю\".\n\n";
+
             return new BroadcastMessage(message, List.of(49062753), ResourceManager.get("moft.jpg"), KeyboardBuilder.startInlineKeyboard);
         } else if (arg.equals("day") && args.hasArg(1) && DateUtils.isStringDateInLocalFormat(args.get(1))) {
             String dateString = args.get(1);
-            return new BroadcastMessage("@УчебнаяЧастьКИПФИН:\n\nРасписание на " + dateString +
-                    " обновлено!", List.of(49062753), new LandingImage(dateString).getImage(), KeyboardBuilder.whenTimetableUpdateInlineKeyboard);
+            return BroadcastUpdateModel.createUpdateTimetableBroadcast(dateString);
         }
         return VKBotAnswer.UNKNOWN_COMMAND.toTextMessage();
     }

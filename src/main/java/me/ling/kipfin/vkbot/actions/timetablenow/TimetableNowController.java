@@ -4,9 +4,10 @@ import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
-import me.ling.kipfin.vkbot.controllers.TimetableController;
+import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
@@ -22,6 +23,7 @@ import java.time.LocalTime;
 /**
  * Отображает информацию о расписании в данный момент
  */
+@BTController
 public class TimetableNowController extends TimetableController {
 
     /**
@@ -39,8 +41,8 @@ public class TimetableNowController extends TimetableController {
      */
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
-        return args.test("Сейчас") ||
-                (args.test("Сейчас") && BTUtils.checkTextIsState(String.join(" ", args)));
+        return args.testMainArg("Сейчас") ||
+                (args.testMainArg("Сейчас") && BTUtils.checkTextIsState(String.join(" ", args)));
     }
 
     /**

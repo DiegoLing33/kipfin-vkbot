@@ -1,5 +1,6 @@
-package me.ling.kipfin.vkbot.controllers;
+package me.ling.kipfin.vkbot.actions.controllers;
 
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Контроллер установки группы
  */
+@BTController
 public class StateSetController extends MessageController {
 
     @Override

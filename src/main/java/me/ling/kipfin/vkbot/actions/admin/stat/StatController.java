@@ -1,6 +1,7 @@
 package me.ling.kipfin.vkbot.actions.admin.stat;
 
 import me.ling.kipfin.vkbot.analyzers.BTStatsAnalyzer;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.entities.VKUser;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
+@BTController
 public class StatController extends MessageController {
     @Override
     public boolean test(String text, @NotNull VKUser user, ControllerArgs args) {

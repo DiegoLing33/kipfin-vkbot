@@ -1,12 +1,13 @@
-package me.ling.kipfin.vkbot.controllers.group;
+package me.ling.kipfin.vkbot.actions.controllers.group;
 
 import com.vk.api.sdk.objects.messages.Keyboard;
 import com.vk.api.sdk.objects.messages.KeyboardButton;
 import me.ling.kipfin.core.entities.university.UniversityGroup;
 import me.ling.kipfin.database.university.GroupsDB;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
-import me.ling.kipfin.vkbot.controllers.TimetableController;
+import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Контроллер выбора группы
  */
+@BTController
 public class SelectGroupNextController extends TimetableController {
 
     @Override

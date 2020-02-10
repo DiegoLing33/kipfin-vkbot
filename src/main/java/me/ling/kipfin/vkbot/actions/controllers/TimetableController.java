@@ -1,4 +1,4 @@
-package me.ling.kipfin.vkbot.controllers;
+package me.ling.kipfin.vkbot.actions.controllers;
 
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;

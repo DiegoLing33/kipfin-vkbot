@@ -2,8 +2,9 @@ package me.ling.kipfin.vkbot.actions.timetableweek;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.managers.TimetableManager;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
-import me.ling.kipfin.vkbot.controllers.TimetableController;
+import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
@@ -16,11 +17,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+@BTController
 public class TimetableWeekController extends TimetableController {
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
-        return args.test("Неделя") ||
-                (args.test("Неделя") && BTUtils.checkTextIsState(String.join(" ", args)));
+        return args.testMainArg("Неделя") ||
+                (args.testMainArg("Неделя") && BTUtils.checkTextIsState(String.join(" ", args)));
     }
 
     @NotNull

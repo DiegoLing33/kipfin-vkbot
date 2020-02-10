@@ -4,9 +4,10 @@ import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
-import me.ling.kipfin.vkbot.controllers.TimetableController;
+import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
@@ -22,6 +23,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Контроллер расписания на сегодня
  */
+@BTController
 public class TimetableDayController extends TimetableController {
 
     /**
@@ -31,8 +33,8 @@ public class TimetableDayController extends TimetableController {
      * @return - результат тестирования
      */
     protected boolean testToday(@NotNull ControllerArgs args) {
-        return args.test("Сегодня") ||
-                (args.test("Сегодня") && BTUtils.checkTextIsState(String.join(" ", args)));
+        return args.testMainArg("Сегодня") ||
+                (args.testMainArg("Сегодня") && BTUtils.checkTextIsState(String.join(" ", args)));
     }
 
     /**
@@ -42,8 +44,8 @@ public class TimetableDayController extends TimetableController {
      * @return - результат тестирования
      */
     protected boolean testTomorrow(@NotNull ControllerArgs args) {
-        return args.test("Завтра") ||
-                (args.test("Завтра") && BTUtils.checkTextIsState(String.join(" ", args)));
+        return args.testMainArg("Завтра") ||
+                (args.testMainArg("Завтра") && BTUtils.checkTextIsState(String.join(" ", args)));
     }
 
     /**

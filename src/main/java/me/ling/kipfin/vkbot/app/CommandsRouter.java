@@ -1,11 +1,14 @@
 package me.ling.kipfin.vkbot.app;
 
+import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
+import org.reflections.Reflections;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +17,23 @@ import java.util.List;
  * Роутер по командам
  */
 public class CommandsRouter extends WithLogger {
+
+    /**
+     * Выполняет поиск активити в системе
+     */
+    public void findActivities() {
+        Logger.logAs("ACM", "Поиск активити...");
+        Reflections ref = new Reflections("me.ling.kipfin.vkbot.actions");
+        for (Class<?> cl : ref.getTypesAnnotatedWith(BTController.class)) {
+            BTController btController = cl.getAnnotation(BTController.class);
+            Logger.logAs("ACM", "Найден активити:", cl.getSimpleName());
+            try {
+                this.addController((MessageController) cl.getConstructors()[0].newInstance());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Возвращает массив аргументов игнорируя первый аргумент

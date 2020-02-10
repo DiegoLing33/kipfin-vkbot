@@ -50,8 +50,8 @@ public class ControllerArgs extends ArrayList<String> {
      * @param alias - алиасы
      * @return - аргументы
      */
-    public boolean test(@Nullable Integer index, String... alias) {
-        var text = index == null ? this.getMainArg() : this.getOrNull(index);
+    public boolean test(Integer index, String... alias) {
+        var text = this.getOrNull(index);
         return text != null && Arrays.stream(alias).anyMatch(s -> s.toLowerCase().equals(text.toLowerCase()));
     }
 
@@ -61,8 +61,9 @@ public class ControllerArgs extends ArrayList<String> {
      * @param alias - алиасы
      * @return - результат тестирования
      */
-    public boolean test(String... alias) {
-        return this.test(null, alias);
+    public boolean testMainArg(String... alias) {
+        return Arrays.stream(alias).anyMatch(s -> s.toLowerCase()
+                .equals(this.getMainArg().toLowerCase()));
     }
 
     /**
@@ -72,8 +73,8 @@ public class ControllerArgs extends ArrayList<String> {
      * @param predicate - предикат
      * @return - результат тестирования
      */
-    public boolean test(@Nullable Integer index, Predicate<String> predicate) {
-        var text = index == null ? this.getMainArg() : this.getOrNull(index);
+    public boolean test(Integer index, Predicate<String> predicate) {
+        var text = this.getOrNull(index);
         return text != null && predicate.test(text);
     }
 
@@ -83,8 +84,8 @@ public class ControllerArgs extends ArrayList<String> {
      * @param predicate - предикат
      * @return - результат тестирования
      */
-    public boolean test(Predicate<String> predicate) {
-        return this.test(null, predicate);
+    public boolean testMainArg(Predicate<String> predicate) {
+        return predicate.test(this.getMainArg());
     }
 
     /**

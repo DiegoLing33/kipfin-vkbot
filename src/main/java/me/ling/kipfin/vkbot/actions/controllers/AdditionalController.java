@@ -1,24 +1,24 @@
-package me.ling.kipfin.vkbot.controllers;
+package me.ling.kipfin.vkbot.actions.controllers;
 
+import me.ling.kipfin.vkbot.app.BTController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
-import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
 
-public class HomeController extends TimetableController {
+@BTController
+public class AdditionalController extends TimetableController {
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
-        return args.test("Домой", "Начать", "/start", "Начало");
+        return args.testMainArg("Дополнительно");
     }
 
     @NotNull
     @Override
     public TextMessage execute(String text, VKUser user, ControllerArgs args) {
-        user.reload();
-        if (user.isStudent() || user.isTeacher()) return VKBotAnswer.HOME.toTextMessage(user.isTeacher());
         this.checkUserState(user);
-        return VKBotAnswer.HOME_UNDEFINED.toTextMessage().setKeyboard(KeyboardBuilder.startInlineKeyboard);
+        user.setKeyboard(user.isStudent() ? KeyboardBuilder.addictionStudentKeyboard : KeyboardBuilder.addictionTeacherKeyboard);
+        return new TextMessage("Дополнительная информация 👾");
     }
 }
