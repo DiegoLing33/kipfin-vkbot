@@ -15,7 +15,7 @@ import me.ling.kipfin.vkbot.managers.BTStatsManager;
 
 /**
  * Обработчик Long-poll VK
- *
+ * <p>
  * Данный класс не просто принемает сообщения, но и отправляет их в роутинг
  *
  * @see CommandsRouter
