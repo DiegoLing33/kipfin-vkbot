@@ -64,26 +64,34 @@ public class TimetableNowModel {
      * @throws NotFoundEntityException - исключение не найденного предмета
      * @throws NoSubjectsException     - исключенеи когда нет дисциплин
      */
+    @Nullable
     public static WithTimeComponent<MessageComponent> getSubjectComponentOnTime(String state, LocalTime time, TimetableMaster master) throws NotFoundEntityException, NoSubjectsException {
         boolean isTeacher = BTUtils.isStateTeacher(state);
         var analyzer = isTeacher ? new TeacherAnalyzer(state, master) : new GroupAnalyzer(state, master);
         var closet = analyzer.getClosetInfo(time);
-        Indexable<? extends Indexable<?>> obj = analyzer.getObjectByIndex(closet.getClosetIndex());
+        var index = closet.getClosetIndex();
 
-        MessageComponent component = null;
-        if(obj instanceof ExtendedSubject) {
-            component = new ExtendedSubjectComponent((ExtendedSubject) obj);
-        }else if(obj instanceof Classroom){
-            component = new ClassroomComponent((Classroom) obj);
+        if (!closet.isStarted() && index < 0) index = analyzer.getFirstIndex();
+        if (index > -1) {
+            Indexable<? extends Indexable<?>> obj = analyzer.getObjectByIndex(closet.getClosetIndex());
+
+            MessageComponent component = null;
+            if (obj instanceof ExtendedSubject) {
+                component = new ExtendedSubjectComponent((ExtendedSubject) obj);
+            } else if (obj instanceof Classroom) {
+                component = new ClassroomComponent((Classroom) obj);
+            }
+            return new WithTimeComponent<>(component, master.getTimeInfo().get(index));
         }
-        return new WithTimeComponent<>(component, master.getTimeInfo().get(closet.getClosetIndex()));
+        return null;
     }
 
     public static TimetableDayComponent<?> getTimetableNowDayComponent(String state, LocalTime time, TimetableMaster master) {
         LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), time);
+        var list = TimetableNowModel.getSubjectComponentOnTime(state, time, master);
         return new TimetableDayComponent<>(
                 new TimetableHeaderComponent(state, dateTime, true),
-                List.of(TimetableNowModel.getSubjectComponentOnTime(state, time, master)),
+                list == null ? List.of() : List.of(list),
                 TimetableNowModel.getTextComponentOrNull(state, time, master));
     }
 
