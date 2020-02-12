@@ -4,7 +4,6 @@ import com.vk.api.sdk.exceptions.ApiException;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.vkbot.vk.VKApiApplication;
 import me.ling.kipfin.vkbot.vk.VKMessenger;
-import me.ling.kipfin.vkbot.vk.VKReceiver;
 
 /**
  * Приложение
@@ -30,7 +29,6 @@ public class Application extends WithLogger {
      * Запускает приложение
      */
     public void start() {
-        VKReceiver receiver = vkApiApplication.getReceiver();
         VKMessenger messenger = vkApiApplication.getMessenger();
         try {
             this.log(true, "Приложение запущено!");
