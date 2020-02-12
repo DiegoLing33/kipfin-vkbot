@@ -1,14 +1,10 @@
 package me.ling.kipfin.vkbot;
 
-import io.github.cdimascio.dotenv.Dotenv;
-import me.ling.kipfin.core.Bootloader;
-import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.Application;
 import me.ling.kipfin.vkbot.utils.ResourceManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class Main {
 
@@ -20,14 +16,8 @@ public class Main {
     public static void main(String[] args) throws SQLException, IOException {
 
         // Загрузка стартовых данных. Библиотека kipfin.core
-        Dotenv dotenv = Dotenv.load();
-        Bootloader bootloader = new Bootloader(dotenv);
+        BTBootloader bootloader = new BTBootloader();
         bootloader.updateDatabase(false);
-        TimetableManager.TIMETABLE_WEB_PATH = dotenv.get("timetable_web_path"); //fixme -- add bootloader modules
-
-        // Получение актуальных данных из .env
-        Integer groupId = Integer.parseInt(Objects.requireNonNull(dotenv.get("vk.group_id")));
-        String token = dotenv.get("vk.token");
 
         // Распаковка ресурсов
         ResourceManager.unpack("moft.jpg");
@@ -35,7 +25,7 @@ public class Main {
         ResourceManager.unpack("welcome.jpg");
 
         // Созданеи и запуск приложения бота
-        Application application = new Application(groupId, token);
+        Application application = new Application(bootloader.getGroupId(), bootloader.getToken());
         application.start();
     }
 

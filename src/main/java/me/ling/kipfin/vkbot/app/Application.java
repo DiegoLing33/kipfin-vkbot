@@ -3,13 +3,9 @@ package me.ling.kipfin.vkbot.app;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import me.ling.kipfin.core.log.WithLogger;
-import me.ling.kipfin.vkbot.database.BotAnswersDB;
-import me.ling.kipfin.vkbot.database.BotValuesDB;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.vk.VKApiApplication;
-
-import java.sql.SQLException;
 
 /**
  * Приложение
@@ -36,11 +32,6 @@ public class Application extends WithLogger {
     public void start() {
         try {
             this.log("Запуск приложения...");
-            this.log("Загрузка дополнительных БД...");
-
-            // Загрузка данных из БД
-            BotValuesDB.shared.update();
-            BotAnswersDB.shared.update();
 
             // Добавленеи контроллеров команд
             var router = this.vkApiApplication.getReceiver().getRouter();
@@ -52,7 +43,7 @@ public class Application extends WithLogger {
             this.vkApiApplication.getMessenger().sendTextMessage(new TextMessage("Бот запущен"),
                     VKUser.getInstance(this.vkApiApplication, 49062753));
             this.vkApiApplication.run();
-        } catch (InterruptedException | SQLException | ApiException | ClientException e) {
+        } catch (InterruptedException | ApiException | ClientException e) {
             e.printStackTrace();
             try {
                 // Сообщение об ошибке в личку todo - упаковать в утилиты
