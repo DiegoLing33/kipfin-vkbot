@@ -4,7 +4,7 @@ import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
@@ -23,7 +23,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Контроллер расписания на сегодня
  */
-@BTController
+@BTActivity
 public class TimetableDayController extends TimetableController {
 
     /**

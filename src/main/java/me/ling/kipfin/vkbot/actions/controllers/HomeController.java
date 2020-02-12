@@ -1,6 +1,6 @@
 package me.ling.kipfin.vkbot.actions.controllers;
 
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
@@ -8,7 +8,7 @@ import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
 
-@BTController
+@BTActivity
 public class HomeController extends TimetableController {
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {

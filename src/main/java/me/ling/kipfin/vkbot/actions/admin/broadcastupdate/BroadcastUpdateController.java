@@ -1,7 +1,7 @@
 package me.ling.kipfin.vkbot.actions.admin.broadcastupdate;
 
 import me.ling.kipfin.core.utils.DateUtils;
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@BTController
+@BTActivity
 public class BroadcastUpdateController extends MessageController {
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {

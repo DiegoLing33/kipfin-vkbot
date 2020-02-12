@@ -24,8 +24,7 @@ public class CommandsRouter extends WithLogger {
     public void findActivities() {
         Logger.logAs("ACM", "Поиск активити...");
         Reflections ref = new Reflections("me.ling.kipfin.vkbot.actions");
-        for (Class<?> cl : ref.getTypesAnnotatedWith(BTController.class)) {
-            BTController btController = cl.getAnnotation(BTController.class);
+        for (Class<?> cl : ref.getTypesAnnotatedWith(BTActivity.class)) {
             Logger.logAs("ACM", "Найден активити:", cl.getSimpleName());
             try {
                 this.addController((MessageController) cl.getConstructors()[0].newInstance());

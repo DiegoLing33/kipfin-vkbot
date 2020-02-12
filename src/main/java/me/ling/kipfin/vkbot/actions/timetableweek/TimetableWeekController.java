@@ -2,7 +2,7 @@ package me.ling.kipfin.vkbot.actions.timetableweek;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
@@ -17,7 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-@BTController
+@BTActivity
 public class TimetableWeekController extends TimetableController {
     @Override
     public boolean test(String text, VKUser user, ControllerArgs args) {
