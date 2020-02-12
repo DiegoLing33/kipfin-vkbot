@@ -1,5 +1,6 @@
 package me.ling.kipfin.vkbot.actions.admin.broadcastupdate;
 
+import me.ling.kipfin.core.io.ResourcesManager;
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
@@ -9,7 +10,6 @@ import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.BroadcastMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
-import me.ling.kipfin.vkbot.utils.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class BroadcastUpdateController extends MessageController {
                     "6. Изменена логика функции \"расписание на завтра\". Чтобы не загружать студентов лишней информацией, расписание " +
                     "на завтра не отображается до момента публикации. Если Вы хотите смоделировать какие-то планы, используйте \"расписание на неделю\".\n\n";
 
-            return new BroadcastMessage(message, List.of(49062753), ResourceManager.get("moft.jpg"), KeyboardBuilder.startInlineKeyboard);
+            return new BroadcastMessage(message, List.of(49062753), ResourcesManager.get("moft.jpg"), KeyboardBuilder.startInlineKeyboard);
         } else if (arg.equals("day") && args.hasArg(1) && DateUtils.isStringDateInLocalFormat(args.get(1))) {
             String dateString = args.get(1);
             return BroadcastUpdateModel.createUpdateTimetableBroadcast(dateString);

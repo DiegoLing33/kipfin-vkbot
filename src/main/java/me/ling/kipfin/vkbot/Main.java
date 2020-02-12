@@ -1,7 +1,7 @@
 package me.ling.kipfin.vkbot;
 
+import me.ling.kipfin.core.io.ResourcesManager;
 import me.ling.kipfin.vkbot.app.Application;
-import me.ling.kipfin.vkbot.utils.ResourceManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,9 +20,9 @@ public class Main {
         bootloader.updateDatabase(false);
 
         // Распаковка ресурсов
-        ResourceManager.unpack("moft.jpg");
-        ResourceManager.unpack("next_day.jpg");
-        ResourceManager.unpack("welcome.jpg");
+        ResourcesManager.unpack("moft.jpg");
+        ResourcesManager.unpack("next_day.jpg");
+        ResourcesManager.unpack("welcome.jpg");
 
         // Созданеи и запуск приложения бота
         Application application = new Application(bootloader.getGroupId(), bootloader.getToken());
