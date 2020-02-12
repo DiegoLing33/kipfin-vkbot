@@ -48,7 +48,8 @@ public class VKApiApplication extends WithLogger {
      * @throws InterruptedException - ошибки в системе
      */
     public void run() throws ApiException, InterruptedException {
-        // fixme - слишком много сообщений об ошибках -- разобраться
+        this.getReceiver().getRouter().findActivities(); // Выполняет поиск активити
+
         while (true) {
             try {
                 this.getReceiver().run(); // Запускает приемник -- и так каждыйй раз
