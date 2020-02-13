@@ -10,7 +10,12 @@ import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.exceptions.StateNotSetException;
+import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
+import me.ling.kipfin.vkbot.utils.BTUtils;
 import me.ling.kipfin.vkbot.utils.ResourceManager;
+import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
 
 /**
  * Контроллер для расписания (В нем содержится обработка исключений)
@@ -44,5 +49,52 @@ public abstract class TimetableController extends MessageController {
             ex.printStackTrace();
             return VKBotAnswer.SOMETHING_WENT_WRONG.toTextMessage();
         }
+    }
+
+    /**
+     * Возвращает текстовое сообщение с отладочным заголовокм
+     * @param state         - состояние
+     * @param date          - дата
+     * @param element       - элемент
+     * @param displayTime   - отображение времени
+     * @return - текстовое сообщение
+     */
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element, boolean displayTime){
+        var header = new TimetableHeaderComponent(state, date, displayTime);
+        return new TextMessage(header.toString() + "\n\n" + element.toString()).applyTagValue("state", state);
+    }
+
+    /**
+     * Возвращает текстовое сообщение с отладочным заголовокм
+     * @param state         - состояние
+     * @param date          - дата
+     * @param element       - элемент
+     * @param displayTime   - отображение времени
+     * @return - текстовое сообщение
+     */
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBotAnswer element, boolean displayTime){
+        return this.getTextMessageWithHeader(state, date, element.toTextMessage(BTUtils.isStateTeacher(state)), displayTime);
+    }
+
+    /**
+     * Возвращает текстовое сообщение с отладочным заголовокм
+     * @param state         - состояние
+     * @param date          - дата
+     * @param element       - элемент
+     * @return - текстовое сообщение
+     */
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBotAnswer element){
+        return this.getTextMessageWithHeader(state, date, element.toTextMessage(BTUtils.isStateTeacher(state)), false);
+    }
+
+    /**
+     * Возвращает текстовое сообщение с отладочным заголовокм
+     * @param state         - состояние
+     * @param date          - дата
+     * @param element       - элемент
+     * @return - текстовое сообщение
+     */
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element){
+        return this.getTextMessageWithHeader(state, date, element, false);
     }
 }

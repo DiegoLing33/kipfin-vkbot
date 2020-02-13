@@ -86,7 +86,8 @@ public final class VKBotAnswer {
      *
      * @return - случайная фраза по типу
      */
-    public String random(Boolean isTeacher) {
+    @NotNull
+    public String random(@NotNull Boolean isTeacher) {
         if (isTeacher)
             return VKBotAnswer.getRandomAnswerByType(this.getRawType() + "__TEACHER");
         else

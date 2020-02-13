@@ -5,6 +5,7 @@ import me.ling.kipfin.vkbot.app.MessageComponent;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class TimetableHeaderComponent extends MessageComponent {
@@ -18,6 +19,14 @@ public class TimetableHeaderComponent extends MessageComponent {
         this.state = state;
         this.localDateTime = localDateTime;
         this.displayTime = displayTime;
+    }
+
+    public TimetableHeaderComponent(String state, LocalDate localDate, boolean displayTime) {
+        this(state, LocalDateTime.of(localDate, LocalTime.now()), displayTime);
+    }
+
+    public TimetableHeaderComponent(String state, LocalDate localDate) {
+        this(state, LocalDateTime.of(localDate, LocalTime.now()), false);
     }
 
     /**

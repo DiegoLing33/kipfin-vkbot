@@ -1,7 +1,9 @@
 package me.ling.kipfin.vkbot.actions.timetablenow;
 
 import me.ling.kipfin.core.utils.DateUtils;
+import me.ling.kipfin.timetable.TimetableRequest;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
+import me.ling.kipfin.timetable.enums.StudentDayState;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.BTController;
@@ -61,24 +63,18 @@ public class TimetableNowController extends TimetableController {
     @Override
     public TextMessage execute(String text, VKUser user, ControllerArgs args) {
         this.checkUserState(user);
-        String state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
-        LocalTime time = LocalTime.now();
+        var state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
+        var time = LocalTime.now();
+        var request = new TimetableRequest(time);
 
-        //todo - fix repeats
-        int localWeekDay = DateUtils.getLocalWeekDay(LocalDate.now());
-        if (localWeekDay == 5 || localWeekDay == 6)
-            return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.now(), true)
-                    .toString() + "\n\n" + VKBotAnswer.WEEKENDS.random(BTUtils.isStateTeacher(state))).applyTagValue("state", state);
+        if (request.getDayState().equals(StudentDayState.WEEKENDS))
+            return this.getTextMessageWithHeader(state, request.getDate(), VKBotAnswer.WEEKENDS, true);
 
         try {
-            String dateString = DateUtils.toLocalDateString(LocalDate.now());
-            TimetableMaster master = TimetableManager.downloadOrGetCache(dateString);
-
-            return TimetableNowModel.getTimetableNowDayComponent(state, time, master).toTextMessage();
+            return TimetableNowModel.getTimetableNowDayComponent(state, time, request.getMaster())
+                    .toTextMessage();
         } catch (NoSubjectsException ex) {
-            //todo - fix repeats
-            return new TextMessage(new TimetableHeaderComponent(state, LocalDateTime.of(LocalDate.now(), time), true)
-                    .toString() + "\n\n" + VKBotAnswer.NO_SUBJECTS.random(user.isTeacher())).applyTagValue("state", state);
+            return this.getTextMessageWithHeader(state, request.getDate(), VKBotAnswer.NO_SUBJECTS);
         }
     }
 }
