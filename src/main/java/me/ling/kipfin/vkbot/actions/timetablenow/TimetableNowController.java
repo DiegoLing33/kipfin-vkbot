@@ -69,12 +69,6 @@ public class TimetableNowController extends TimetableController {
 
         if (request.getDayState().equals(StudentDayState.WEEKENDS))
             return this.getTextMessageWithHeader(state, request.getDate(), VKBotAnswer.WEEKENDS, true);
-
-        try {
-            return TimetableNowModel.getTimetableNowDayComponent(state, time, request.getMaster())
-                    .toTextMessage();
-        } catch (NoSubjectsException ex) {
-            return this.getTextMessageWithHeader(state, request.getDate(), VKBotAnswer.NO_SUBJECTS);
-        }
+        return TimetableNowModel.getTimetableNowDayComponent(state, time, request.getMaster()).toTextMessage();
     }
 }

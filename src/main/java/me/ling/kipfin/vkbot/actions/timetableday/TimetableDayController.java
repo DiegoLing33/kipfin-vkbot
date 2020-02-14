@@ -89,12 +89,8 @@ public class TimetableDayController extends TimetableController {
         if (request.getDayState().equals(StudentDayState.WEEKENDS))
             return this.getTextMessageWithHeader(state, date, VKBotAnswer.WEEKENDS);
 
-        try {
-            TimetableMaster master = request.getMaster();
-            TimetableDayModel model = new TimetableDayModel(state, master);
-            return model.getComponent().toTextMessage();
-        } catch (NoSubjectsException ex) {
-            return this.getTextMessageWithHeader(state, date, VKBotAnswer.NO_SUBJECTS);
-        }
+        TimetableMaster master = request.getMaster();
+        TimetableDayModel model = new TimetableDayModel(state, master);
+        return model.getComponent().toTextMessage();
     }
 }

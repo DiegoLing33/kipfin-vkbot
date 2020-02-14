@@ -80,11 +80,9 @@ public class TimetableDayModel extends MessageModel {
      *
      * @return - массив компонентов
      */
-    public List<MessageComponent> getMessageComponents() {
-        return this.isTeacher() ? this.getMaster().getClassrooms().get(this.getState())
-                .stream().map(ClassroomComponent::new).collect(Collectors.toList()) :
-                this.getMaster().getGroupSubjects(this.getState())
-                        .stream().map(ExtendedSubjectComponent::new).collect(Collectors.toList());
+    public List<? extends MessageComponent> getMessageComponents() {
+        if(this.isTeacher()) return ClassroomComponent.create(this.getMaster().getClassroomsForName(this.getState()));
+        return ExtendedSubjectComponent.create(this.getMaster().getGroupSubjects(this.getState()));
     }
 
     /**
@@ -92,7 +90,7 @@ public class TimetableDayModel extends MessageModel {
      *
      * @return - массив компонентов
      */
-    public List<WithTimeComponent<MessageComponent>> getWithTimeComponents() {
+    public List<WithTimeComponent<? extends MessageComponent>> getWithTimeComponents() {
         return this.getMessageComponents().stream().map(messageComponent -> {
             var index = 0;
             if (messageComponent instanceof ExtendedSubjectComponent) {

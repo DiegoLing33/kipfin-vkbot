@@ -1,5 +1,6 @@
 package me.ling.kipfin.vkbot.actions.controllers;
 
+import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
@@ -40,7 +41,8 @@ public abstract class TimetableController extends MessageController {
         } catch (NoTimetableOnDateException ex) {
             return VKBotAnswer.NO_TIMETABLE_AT_DATE.toTextMessage();
         } catch (NoSubjectsException ex) {
-            return VKBotAnswer.NO_SUBJECTS.toTextMessage(user.isTeacher());
+            return this.getTextMessageWithHeader(ex.getState(), DateUtils.fromLocalDateString(ex.getDate()),
+                    VKBotAnswer.NO_SUBJECTS);
         } catch (StateNotSetException ex) {
             return new ImagedTextMessage(VKBotAnswer.HOME_UNDEFINED.random(),
                     KeyboardBuilder.startInlineKeyboard,
@@ -53,48 +55,52 @@ public abstract class TimetableController extends MessageController {
 
     /**
      * Возвращает текстовое сообщение с отладочным заголовокм
-     * @param state         - состояние
-     * @param date          - дата
-     * @param element       - элемент
-     * @param displayTime   - отображение времени
+     *
+     * @param state       - состояние
+     * @param date        - дата
+     * @param element     - элемент
+     * @param displayTime - отображение времени
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element, boolean displayTime){
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element, boolean displayTime) {
         var header = new TimetableHeaderComponent(state, date, displayTime);
         return new TextMessage(header.toString() + "\n\n" + element.toString()).applyTagValue("state", state);
     }
 
     /**
      * Возвращает текстовое сообщение с отладочным заголовокм
-     * @param state         - состояние
-     * @param date          - дата
-     * @param element       - элемент
-     * @param displayTime   - отображение времени
+     *
+     * @param state       - состояние
+     * @param date        - дата
+     * @param element     - элемент
+     * @param displayTime - отображение времени
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBotAnswer element, boolean displayTime){
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBotAnswer element, boolean displayTime) {
         return this.getTextMessageWithHeader(state, date, element.toTextMessage(BTUtils.isStateTeacher(state)), displayTime);
     }
 
     /**
      * Возвращает текстовое сообщение с отладочным заголовокм
-     * @param state         - состояние
-     * @param date          - дата
-     * @param element       - элемент
+     *
+     * @param state   - состояние
+     * @param date    - дата
+     * @param element - элемент
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBotAnswer element){
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBotAnswer element) {
         return this.getTextMessageWithHeader(state, date, element.toTextMessage(BTUtils.isStateTeacher(state)), false);
     }
 
     /**
      * Возвращает текстовое сообщение с отладочным заголовокм
-     * @param state         - состояние
-     * @param date          - дата
-     * @param element       - элемент
+     *
+     * @param state   - состояние
+     * @param date    - дата
+     * @param element - элемент
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element){
+    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element) {
         return this.getTextMessageWithHeader(state, date, element, false);
     }
 }
