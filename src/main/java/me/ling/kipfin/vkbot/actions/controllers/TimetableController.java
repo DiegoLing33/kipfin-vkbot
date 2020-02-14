@@ -64,7 +64,7 @@ public abstract class TimetableController extends MessageController {
      */
     public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element, boolean displayTime) {
         var header = new TimetableHeaderComponent(state, date, displayTime);
-        return new TextMessage(header.toString() + "\n\n" + element.toString()).applyTagValue("state", state);
+        return new TextMessage(header.toString() + "\n\n" + element.getText()).applyTagValue("state", state);
     }
 
     /**

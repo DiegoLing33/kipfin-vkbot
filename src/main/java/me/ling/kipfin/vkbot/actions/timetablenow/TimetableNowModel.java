@@ -86,6 +86,7 @@ public class TimetableNowModel {
         return null;
     }
 
+    @NotNull
     public static TimetableDayComponent<?> getTimetableNowDayComponent(String state, LocalTime time, TimetableMaster master) {
         LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), time);
         var list = TimetableNowModel.getSubjectComponentOnTime(state, time, master);

@@ -1,11 +1,8 @@
 package me.ling.kipfin.vkbot.actions.timetableday;
 
-import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.TimetableRequest;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.enums.StudentDayState;
-import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
-import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;

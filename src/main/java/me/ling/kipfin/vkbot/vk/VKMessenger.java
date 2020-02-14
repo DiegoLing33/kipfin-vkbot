@@ -139,7 +139,7 @@ public class VKMessenger extends WithLogger {
      * @throws ClientException - исключеняи клиента
      * @throws ApiException    - исключения API
      */
-    public void sendBroadcastMessage(BroadcastMessage broadcastMessage) throws ClientException, ApiException {
+    public void sendBroadcastMessage(@NotNull BroadcastMessage broadcastMessage) throws ClientException, ApiException {
         for (var id : broadcastMessage.getUsers()) {
             var user = VKUser.getInstance(this.getVkApiApplication(), id);
             this.sendImagedTextMessage(broadcastMessage, user);
@@ -154,7 +154,7 @@ public class VKMessenger extends WithLogger {
      * @throws ClientException - исключеняи клиента
      * @throws ApiException    - исключения API
      */
-    public void sendTextMessagesButch(TextMessageButch butch, VKUser user) throws ClientException, ApiException {
+    public void sendTextMessagesButch(@NotNull TextMessageButch butch, VKUser user) throws ClientException, ApiException {
         for (var message : butch.getButch()) {
             this.sendTextMessage(message, user);
         }

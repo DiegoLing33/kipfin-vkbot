@@ -1,11 +1,7 @@
 package me.ling.kipfin.vkbot.actions.timetablenow;
 
-import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.TimetableRequest;
-import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.enums.StudentDayState;
-import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
-import me.ling.kipfin.timetable.managers.TimetableManager;
 import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
@@ -13,12 +9,9 @@ import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBotAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
-import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
