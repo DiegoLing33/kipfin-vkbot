@@ -73,7 +73,6 @@ public class TimetableDayController extends TimetableController {
      * @param args - аргументы контроллера
      * @return - ответ бота
      * @see MessageController
-     * @see MessageController ::test
      */
     @NotNull
     @Override

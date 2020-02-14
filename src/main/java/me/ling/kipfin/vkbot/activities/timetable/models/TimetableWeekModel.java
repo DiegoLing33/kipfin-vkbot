@@ -1,6 +1,7 @@
 package me.ling.kipfin.vkbot.activities.timetable.models;
 
 import me.ling.kipfin.core.utils.DateUtils;
+import me.ling.kipfin.timetable.TimetableRequest;
 import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.vkbot.activities.timetable.components.TimetableWeekComponent;
 import me.ling.kipfin.vkbot.activities.timetable.components.SubjectComponent;
@@ -24,15 +25,9 @@ public class TimetableWeekModel {
     }
 
     public TimetableWeekComponent getMainComponent(int dayIndex) {
+        var date = TimetableRequest.getClosetWorkingDay(LocalDate.now()).with(DayOfWeek.of(dayIndex + 1));
+        var localDateTime = LocalDateTime.of(date, LocalTime.now());
 
-        LocalDate date = LocalDate.now();
-        //todo - fix repeats
-        int localWeekDay = DateUtils.getLocalWeekDay(date);
-        if (localWeekDay == 5) date = date.plus(2, ChronoUnit.DAYS);
-        else if (localWeekDay == 6) date = date.plus(1, ChronoUnit.DAYS);
-
-        date = date.with(DayOfWeek.of(dayIndex + 1));
-        LocalDateTime localDateTime = LocalDateTime.of(date, LocalTime.now());
         return new TimetableWeekComponent(
                 new TimetableHeaderComponent(this.group, localDateTime, false),
                 this.master.getWeek().getGroupWeek(this.group).get(dayIndex).stream()
