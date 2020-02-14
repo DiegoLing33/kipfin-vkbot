@@ -2,8 +2,8 @@ package me.ling.kipfin.vkbot.app;
 
 import com.vk.api.sdk.exceptions.ApiException;
 import me.ling.kipfin.core.log.WithLogger;
-import me.ling.kipfin.vkbot.vk.VKApiApplication;
-import me.ling.kipfin.vkbot.vk.VKMessenger;
+import me.ling.kipfin.vkbot.utils.vk.VKApiApplication;
+import me.ling.kipfin.vkbot.utils.vk.VKMessenger;
 
 /**
  * Приложение

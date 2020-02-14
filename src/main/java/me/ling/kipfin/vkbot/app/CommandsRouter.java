@@ -2,7 +2,7 @@ package me.ling.kipfin.vkbot.app;
 
 import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
-import me.ling.kipfin.vkbot.entities.VKBotAnswer;
+import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
@@ -84,7 +84,7 @@ public class CommandsRouter extends WithLogger {
             TextMessage response = controller.requestExecute(text, btUser, args);
             if (response != null) return response;
         }
-        return VKBotAnswer.UNKNOWN_COMMAND.toTextMessage();
+        return VKBTAnswer.UNKNOWN_COMMAND.toTextMessage();
     }
 
     /**

@@ -1,8 +1,8 @@
 package me.ling.kipfin.vkbot;
 
 import me.ling.kipfin.timetable.TimetableBootloader;
-import me.ling.kipfin.vkbot.database.BotAnswersDB;
-import me.ling.kipfin.vkbot.database.BotValuesDB;
+import me.ling.kipfin.vkbot.database.BTAnswersDB;
+import me.ling.kipfin.vkbot.database.BTValuesDB;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 import java.sql.SQLException;
@@ -44,7 +44,7 @@ public class BTBootloader extends TimetableBootloader {
         this.log("Загрузка дополнительных БД...");
 
         // Загрузка данных из БД
-        BotValuesDB.shared.update();
-        BotAnswersDB.shared.update();
+        BTValuesDB.shared.update();
+        BTAnswersDB.shared.update();
     }
 }

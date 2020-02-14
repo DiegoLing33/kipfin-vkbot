@@ -6,10 +6,10 @@ import com.vk.api.sdk.objects.messages.Keyboard;
 import com.vk.api.sdk.objects.users.Fields;
 import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
-import me.ling.kipfin.vkbot.builders.KeyboardBuilder;
-import me.ling.kipfin.vkbot.database.BotValuesDB;
-import me.ling.kipfin.vkbot.enums.BotUserSex;
-import me.ling.kipfin.vkbot.vk.VKApiApplication;
+import me.ling.kipfin.vkbot.utils.builders.KeyboardBuilder;
+import me.ling.kipfin.vkbot.database.BTValuesDB;
+import me.ling.kipfin.vkbot.entities.enums.BotUserSex;
+import me.ling.kipfin.vkbot.utils.vk.VKApiApplication;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -145,7 +145,7 @@ public class VKUser extends WithLogger {
      */
     public boolean isAdmin() {
         try {
-            return BotValuesDB.shared.getValue("admin", this.getUserId().toString()).value.equals("1");
+            return BTValuesDB.shared.getValue("admin", this.getUserId().toString()).value.equals("1");
         } catch (Exception e) {
             return false;
         }
@@ -159,7 +159,7 @@ public class VKUser extends WithLogger {
     @Nullable
     public String getStateFromServer() {
         try {
-            return BotValuesDB.shared.getValue("vkid", this.getUserId().toString()).getValue();
+            return BTValuesDB.shared.getValue("vkid", this.getUserId().toString()).getValue();
         } catch (Exception e) {
             return null;
         }
@@ -211,7 +211,7 @@ public class VKUser extends WithLogger {
     public void setState(String state) {
         this.state = state;
         try {
-            BotValuesDB.shared.setValue("vkid", this.getUserId().toString(), state);
+            BTValuesDB.shared.setValue("vkid", this.getUserId().toString(), state);
         } catch (SQLException e) {
             e.printStackTrace();
         }

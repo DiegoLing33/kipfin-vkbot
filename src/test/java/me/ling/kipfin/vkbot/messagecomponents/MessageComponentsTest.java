@@ -1,6 +1,6 @@
 package me.ling.kipfin.vkbot.messagecomponents;
 
-import me.ling.kipfin.vkbot.messagecomponents.timetable.TimetableHeaderComponent;
+import me.ling.kipfin.vkbot.activities.timetable.components.TimetableHeaderComponent;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
