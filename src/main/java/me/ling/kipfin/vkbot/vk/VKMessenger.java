@@ -4,24 +4,26 @@ import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import me.ling.kipfin.core.log.WithLogger;
+import me.ling.kipfin.core.utils.ExceptionUtils;
 import me.ling.kipfin.core.utils.IntUtils;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.BroadcastMessage;
 import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.entities.message.TextMessageButch;
+import me.ling.kipfin.vkbot.utils.BTUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
 /**
  * Мессенджер
- *
+ * <p>
  * Класс для отправки сообщений
+ *
  * @see TextMessage
  * @see ImagedTextMessage
  * @see BroadcastMessage
- *
  * @see TextMessageButch
  */
 public class VKMessenger extends WithLogger {
@@ -49,7 +51,8 @@ public class VKMessenger extends WithLogger {
 
     /**
      * Создает запрос на отправку сообщения
-     * @return  - запрос на отправку
+     *
+     * @return - запрос на отправку
      */
     public MessagesSendQuery createMessageSendQuery() {
         int random = IntUtils.getRandomInteger(99999, 10000);
@@ -74,6 +77,7 @@ public class VKMessenger extends WithLogger {
      * @return - пользователь
      */
     public MessagesSendQuery createMessageSendQuery(@NotNull VKUser user, @NotNull TextMessage textMessage) {
+        textMessage.applyUserFilter(user);
         var query = createMessageSendQuery().userId(user.getUserId()).keyboard(user.getKeyboard());
         if (textMessage.getKeyboard() != null) query.keyboard(textMessage.getKeyboard());
         query.message(textMessage.getText());
@@ -82,6 +86,27 @@ public class VKMessenger extends WithLogger {
 
     public void sendTextMessage(@NotNull TextMessage message, @NotNull VKUser user) throws ClientException, ApiException {
         createMessageSendQuery(user, message).execute();
+    }
+
+
+    /**
+     * Выполняет отправку сообщения
+     *
+     * @param message - сообщение
+     * @param user    - пользователь
+     * @throws ClientException - исключение клиента
+     * @throws ApiException    - исключение API
+     */
+    public void sendMessage(TextMessage message, @NotNull VKUser user) throws ClientException, ApiException {
+        if (message instanceof BroadcastMessage) {
+            getVkApiApplication().getMessenger().sendBroadcastMessage((BroadcastMessage) message);
+        } else if (message instanceof TextMessageButch) {
+            getVkApiApplication().getMessenger().sendTextMessagesButch((TextMessageButch) message, user);
+        } else if (message instanceof ImagedTextMessage) {
+            getVkApiApplication().getMessenger().sendImagedTextMessage((ImagedTextMessage) message, user);
+        } else {
+            getVkApiApplication().getMessenger().sendTextMessage(message, user);
+        }
     }
 
     /**
@@ -109,12 +134,13 @@ public class VKMessenger extends WithLogger {
 
     /**
      * Отправляет общее сообщение
-     * @param broadcastMessage  - общее сообщение
-     * @throws ClientException  - исключеняи клиента
-     * @throws ApiException - исключения API
+     *
+     * @param broadcastMessage - общее сообщение
+     * @throws ClientException - исключеняи клиента
+     * @throws ApiException    - исключения API
      */
     public void sendBroadcastMessage(BroadcastMessage broadcastMessage) throws ClientException, ApiException {
-        for(var id: broadcastMessage.getUsers()){
+        for (var id : broadcastMessage.getUsers()) {
             var user = VKUser.getInstance(this.getVkApiApplication(), id);
             this.sendImagedTextMessage(broadcastMessage, user);
         }
@@ -124,13 +150,31 @@ public class VKMessenger extends WithLogger {
     /**
      * Отправляет корзину сообщений
      *
-     * @param butch  - пакет сообщений
-     * @throws ClientException  - исключеняи клиента
-     * @throws ApiException - исключения API
+     * @param butch - пакет сообщений
+     * @throws ClientException - исключеняи клиента
+     * @throws ApiException    - исключения API
      */
     public void sendTextMessagesButch(TextMessageButch butch, VKUser user) throws ClientException, ApiException {
-        for(var message: butch.getButch()){
+        for (var message : butch.getButch()) {
             this.sendTextMessage(message, user);
         }
+    }
+
+    /**
+     * Отправляет текстовое сообщение администратору
+     *
+     * @param message - сообщение
+     */
+    public void sendMessageToAdmin(TextMessage message) {
+        ExceptionUtils.silent(() -> this.sendMessage(message, VKUser.getInstance(this.getVkApiApplication(), BTUtils.ADMIN_ID)));
+    }
+
+    /**
+     * Отправляет текстовое сообщение администратору
+     *
+     * @param message - сообщение
+     */
+    public void sendMessageToAdmin(String message) {
+        this.sendMessageToAdmin(new TextMessage(message));
     }
 }

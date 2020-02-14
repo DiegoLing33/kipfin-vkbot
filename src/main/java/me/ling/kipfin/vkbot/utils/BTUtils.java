@@ -8,6 +8,11 @@ import org.jetbrains.annotations.Nullable;
 public final class BTUtils {
 
     /**
+     * Идентификатор администратора
+     */
+    public static Integer ADMIN_ID = -1;
+
+    /**
      * Совершает попытку получить состояние
      *
      * @param text - текст

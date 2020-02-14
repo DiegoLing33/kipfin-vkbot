@@ -1,6 +1,6 @@
 package me.ling.kipfin.vkbot.actions.getrouter;
 
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKUser;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Контрллер руководителей
  */
-@BTController
+@BTActivity
 public class GetRouterController extends TimetableController {
 
     @Override

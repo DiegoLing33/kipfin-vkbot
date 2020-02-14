@@ -2,7 +2,7 @@ package me.ling.kipfin.vkbot.actions.controllers.core;
 
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.database.university.TeachersDB;
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.database.BotAnswersDB;
 import me.ling.kipfin.vkbot.database.BotValuesDB;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 /**
  * Обновление баз данных
  */
-@BTController
+@BTActivity
 public class UpdateDBController extends MessageController {
 
     @Override

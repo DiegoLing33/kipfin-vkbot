@@ -2,14 +2,14 @@ package me.ling.kipfin.vkbot.actions.admin.classroominfo;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.timetable.managers.TimetableManager;
-import me.ling.kipfin.vkbot.app.BTController;
+import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.actions.controllers.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
 
-@BTController
+@BTActivity
 public class ClassRoomInfoController extends TimetableController {
 
     @Override
