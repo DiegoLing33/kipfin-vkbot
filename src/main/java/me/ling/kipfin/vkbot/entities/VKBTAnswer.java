@@ -2,7 +2,7 @@ package me.ling.kipfin.vkbot.entities;
 
 import me.ling.kipfin.core.utils.ListUtils;
 import me.ling.kipfin.vkbot.database.BTAnswersDB;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -114,8 +114,8 @@ public final class VKBTAnswer {
      */
     @NotNull
     @Contract(" -> new")
-    public TextMessage toTextMessage(){
-        return new TextMessage(this.random());
+    public CoreMessage toTextMessage(){
+        return new CoreMessage(this.random(), null);
     }
     /**
      * Преобразует в сообщение
@@ -123,7 +123,7 @@ public final class VKBTAnswer {
      * @return  - сообщение TextMessage
      */
     @NotNull
-    public TextMessage toTextMessage(boolean isTeacher){
-        return new TextMessage(this.random(isTeacher));
+    public CoreMessage toTextMessage(boolean isTeacher){
+        return new CoreMessage(this.random(isTeacher), null);
     }
 }

@@ -51,6 +51,7 @@ public class ClassroomComponent extends MessageComponent {
         return classroom;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return String.format("Кто: %s\nГде: %s", this.getClassroom().getGroup(), this.getClassroom().getWhere());

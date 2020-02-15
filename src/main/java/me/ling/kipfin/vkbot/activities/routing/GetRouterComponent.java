@@ -2,6 +2,7 @@ package me.ling.kipfin.vkbot.activities.routing;
 
 import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
+import org.jetbrains.annotations.NotNull;
 
 public class GetRouterComponent extends MessageComponent {
 
@@ -46,6 +47,7 @@ public class GetRouterComponent extends MessageComponent {
                 this.getResponse());
     }
 
+    @NotNull
     @Override
     public String toString() {
         return String.format("%s\n\n%s", this.getInfoLine(), this.getResponseLine());

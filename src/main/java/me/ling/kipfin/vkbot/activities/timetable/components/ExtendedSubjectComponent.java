@@ -51,6 +51,7 @@ public class ExtendedSubjectComponent extends MessageComponent {
      * Преобразует компонент в строку
      * @return  - компонент в виде текста
      */
+    @NotNull
     @Override
     public String toString() {
         return String.format("%s\nГде: %s\nКто: %s", this.getExtendedSubject().getTitle(),

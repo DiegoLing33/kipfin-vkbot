@@ -2,6 +2,7 @@ package me.ling.kipfin.vkbot.app;
 
 import com.vk.api.sdk.exceptions.ApiException;
 import me.ling.kipfin.core.log.WithLogger;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import me.ling.kipfin.vkbot.utils.vk.VKApiApplication;
 import me.ling.kipfin.vkbot.utils.vk.VKMessenger;
 
@@ -32,12 +33,11 @@ public class Application extends WithLogger {
         VKMessenger messenger = vkApiApplication.getMessenger();
         try {
             this.log(true, "Приложение запущено!");
-            messenger.sendMessageToAdmin("Бот запущен");
+            messenger.sendAdmin(new CoreMessage("Бот запущен", null));
             this.vkApiApplication.run();
         } catch (InterruptedException | ApiException e) {
             e.printStackTrace();
-            messenger.sendMessageToAdmin(e.getMessage());
-
+            messenger.sendAdmin(new CoreMessage(e.getMessage(), null));
             start();
         }
     }

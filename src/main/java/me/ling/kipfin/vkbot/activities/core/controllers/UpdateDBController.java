@@ -9,7 +9,7 @@ import me.ling.kipfin.vkbot.database.BTValuesDB;
 import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
 import me.ling.kipfin.vkbot.app.MessageController;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
@@ -27,7 +27,7 @@ public class UpdateDBController extends MessageController {
 
     @NotNull
     @Override
-    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
+    public CoreMessage execute(String text, VKUser user, ControllerArgs args) {
         if(!user.isAdmin()) return VKBTAnswer.DENY_PERMISSIONS.toTextMessage();
         try {
             GroupsDB.shared.update();
@@ -37,6 +37,6 @@ public class UpdateDBController extends MessageController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new TextMessage( "Базы данных обновлены 🕺🏼");
+        return new CoreMessage( "Базы данных обновлены 🕺🏼", null);
     }
 }

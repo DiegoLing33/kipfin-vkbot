@@ -6,10 +6,10 @@ import me.ling.kipfin.core.entities.university.UniversityGroup;
 import me.ling.kipfin.database.university.GroupsDB;
 import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import me.ling.kipfin.vkbot.utils.builders.KeyboardBuilder;
 import me.ling.kipfin.vkbot.activities.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -30,13 +30,13 @@ public class SelectGroupNextController extends TimetableController {
 
     @NotNull
     @Override
-    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
+    public CoreMessage execute(String text, VKUser user, ControllerArgs args) {
         String first = text.substring(0, 1);
         List<String> groups = GroupsDB.shared.getCache().values().stream()
                 .filter(universityGroup -> universityGroup.getTitle().substring(0, 1).equals(first))
                 .map(UniversityGroup::getTitle).collect(Collectors.toCollection(Stack::new));
         user.setKeyboard(this.getKeyboard(groups));
-        return new TextMessage("Выберите группу ⚡️");
+        return new CoreMessage("Выберите группу ⚡️", null);
     }
 
     /**

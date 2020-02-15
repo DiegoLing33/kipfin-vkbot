@@ -7,7 +7,7 @@ import com.vk.api.sdk.objects.messages.Message;
 import me.ling.kipfin.core.utils.StringUtils;
 import me.ling.kipfin.vkbot.app.CommandsRouter;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import me.ling.kipfin.vkbot.managers.BTStatsManager;
 
 /**
@@ -45,9 +45,9 @@ public class VKReceiver extends CallbackApiLongPoll {
         try {
             String inputText = StringUtils.removeAllSpaces(message.getText());
             VKUser btUser = VKUser.getInstance(this.getVkApiApplication(), message.getFromId());
-            TextMessage result = router.execute(inputText, btUser);
+            CoreMessage result = router.execute(inputText, btUser);
             BTStatsManager.add(btUser.getUserId(), message.getText());
-            this.getVkApiApplication().getMessenger().sendMessage(result, btUser);
+            this.getVkApiApplication().getMessenger().send(result, btUser);
         } catch (ClientException | ApiException e) {
             e.printStackTrace();
         }

@@ -6,8 +6,8 @@ import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.activities.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
-import me.ling.kipfin.vkbot.entities.message.TextMessageButch;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
+import me.ling.kipfin.vkbot.entities.message.MessageButch;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,11 +21,11 @@ public class HelpController extends TimetableController {
 
     @NotNull
     @Override
-    protected TextMessage execute(String text, VKUser user, ControllerArgs args) {
-        return new TextMessageButch(List.of(
+    protected CoreMessage execute(String text, VKUser user, ControllerArgs args) {
+        return new MessageButch(List.of(
                 new VKBTAnswer("HELP_p1").toTextMessage(),
                 new VKBTAnswer("HELP_p2").toTextMessage(),
-                new TextMessage(new VKBTAnswer("HELP_p3").random() + "\n\n" + Application.Version)));
+                new CoreMessage(new VKBTAnswer("HELP_p3").random() + "\n\n" + Application.Version, null)));
     }
 
 }

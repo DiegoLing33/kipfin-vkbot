@@ -8,10 +8,10 @@ import me.ling.kipfin.timetable.entities.TimetableMaster;
 import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.vkbot.activities.timetable.components.*;
-import me.ling.kipfin.vkbot.app.MessageModel;
-import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.app.MessageComponent;
+import me.ling.kipfin.vkbot.app.MessageModel;
 import me.ling.kipfin.vkbot.app.TextComponent;
+import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 
 import java.time.LocalDate;

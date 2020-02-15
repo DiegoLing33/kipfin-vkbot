@@ -2,8 +2,8 @@ package me.ling.kipfin.vkbot.activities.watcher.components;
 
 import me.ling.kipfin.timetable.entities.Classroom;
 import me.ling.kipfin.vkbot.app.MessageComponent;
+import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +31,7 @@ public class ClassRoomInfoComponent extends MessageComponent {
         return classrooms;
     }
 
+    @NotNull
     @Override
     public String toString() {
         String info = this.getClassrooms().stream()

@@ -2,7 +2,6 @@ package me.ling.kipfin.vkbot.activities.timetable.components;
 
 import me.ling.kipfin.vkbot.app.MessageComponent;
 import me.ling.kipfin.vkbot.app.TextComponent;
-import me.ling.kipfin.vkbot.activities.timetable.components.TimetableHeaderComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,6 +73,7 @@ public class TimetableDayComponent<T extends MessageComponent> extends MessageCo
      *
      * @return - строка
      */
+    @NotNull
     @Override
     public String toString() {
         String messageComponents = this.getMessageComponents().stream().map(MessageComponent::toString).collect(Collectors.joining("\n\n"));

@@ -1,7 +1,7 @@
 package me.ling.kipfin.vkbot.app;
 
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +41,7 @@ public abstract class MessageController {
      * @return - ответ бота
      */
     @NotNull
-    protected abstract TextMessage execute(String text, VKUser user, ControllerArgs args);
+    protected abstract CoreMessage execute(String text, VKUser user, ControllerArgs args);
 
     /**
      * Запрашивает исполнение
@@ -52,7 +52,7 @@ public abstract class MessageController {
      * @return      - возвращает ответ контроллера или null
      */
     @Nullable
-    public TextMessage requestExecute(String text, VKUser user, ControllerArgs args) {
+    public CoreMessage requestExecute(String text, VKUser user, ControllerArgs args) {
         if (this.test(text, user, args))
             return execute(text, user, args);
         return null;

@@ -1,6 +1,6 @@
 package me.ling.kipfin.vkbot.app;
 
-import me.ling.kipfin.vkbot.app.MessageComponent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Текстовой компонент
@@ -44,6 +44,7 @@ public class TextComponent extends MessageComponent {
         return type;
     }
 
+    @NotNull
     @Override
     public String toString() {
         switch (this.getType()){

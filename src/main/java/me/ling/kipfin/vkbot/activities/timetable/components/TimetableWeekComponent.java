@@ -1,8 +1,7 @@
 package me.ling.kipfin.vkbot.activities.timetable.components;
 
 import me.ling.kipfin.vkbot.app.MessageComponent;
-import me.ling.kipfin.vkbot.activities.timetable.components.SubjectComponent;
-import me.ling.kipfin.vkbot.activities.timetable.components.TimetableHeaderComponent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +24,7 @@ public class TimetableWeekComponent extends MessageComponent {
         return headerComponent;
     }
 
+    @NotNull
     @Override
     public String toString() {
         String subjects = this.subjectComponents.stream()

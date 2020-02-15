@@ -9,7 +9,7 @@ import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.activities.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import me.ling.kipfin.vkbot.utils.BTUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,7 +55,7 @@ public class TimetableNowController extends TimetableController {
      */
     @NotNull
     @Override
-    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
+    public CoreMessage execute(String text, VKUser user, ControllerArgs args) {
         this.checkUserState(user);
         var state = BTUtils.getStateFromStringOrUser(String.join(" ", args), user);
         var time = LocalTime.now();
@@ -63,6 +63,6 @@ public class TimetableNowController extends TimetableController {
 
         if (request.getDayState().equals(StudentDayState.WEEKENDS))
             return this.getTextMessageWithHeader(state, request.getDate(), VKBTAnswer.WEEKENDS, true);
-        return TimetableNowModel.getTimetableNowDayComponent(state, time, request.getMaster()).toTextMessage();
+        return TimetableNowModel.getTimetableNowDayComponent(state, time, request.getMaster()).toMessage();
     }
 }

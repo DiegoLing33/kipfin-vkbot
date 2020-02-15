@@ -5,7 +5,7 @@ import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import org.jetbrains.annotations.NotNull;
 
 @BTActivity
@@ -17,7 +17,7 @@ public class VersionController extends MessageController {
 
     @NotNull
     @Override
-    protected TextMessage execute(String text, VKUser user, ControllerArgs args) {
-        return new TextMessage(Application.Version);
+    protected CoreMessage execute(String text, VKUser user, ControllerArgs args) {
+        return new CoreMessage(Application.Version, null);
     }
 }

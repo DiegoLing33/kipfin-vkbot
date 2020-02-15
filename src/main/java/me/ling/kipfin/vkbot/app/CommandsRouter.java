@@ -4,7 +4,7 @@ import me.ling.kipfin.core.log.Logger;
 import me.ling.kipfin.core.log.WithLogger;
 import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
@@ -23,7 +23,7 @@ public class CommandsRouter extends WithLogger {
      */
     public void findActivities() {
         Logger.logAs("ACM", "Поиск активити...");
-        Reflections ref = new Reflections("me.ling.kipfin.vkbot.actions");
+        Reflections ref = new Reflections("me.ling.kipfin.vkbot.activities");
         for (Class<?> cl : ref.getTypesAnnotatedWith(BTActivity.class)) {
             Logger.logAs("ACM", "Найден активити:", cl.getSimpleName());
             try {
@@ -76,12 +76,12 @@ public class CommandsRouter extends WithLogger {
      * если test не прошел!
      */
     @NotNull
-    public TextMessage execute(String text, @NotNull VKUser btUser) {
+    public CoreMessage execute(String text, @NotNull VKUser btUser) {
         this.log(btUser.getUserId(), text);
         ControllerArgs args = CommandsRouter.getArgsFromStringWithNoMainArg(text);
 
         for (MessageController controller : this.controllers) {
-            TextMessage response = controller.requestExecute(text, btUser, args);
+            CoreMessage response = controller.requestExecute(text, btUser, args);
             if (response != null) return response;
         }
         return VKBTAnswer.UNKNOWN_COMMAND.toTextMessage();

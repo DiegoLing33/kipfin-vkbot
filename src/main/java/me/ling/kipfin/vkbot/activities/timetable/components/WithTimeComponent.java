@@ -2,6 +2,7 @@ package me.ling.kipfin.vkbot.activities.timetable.components;
 
 import me.ling.kipfin.timetable.entities.timeinfo.TimeInfoItem;
 import me.ling.kipfin.vkbot.app.MessageComponent;
+import org.jetbrains.annotations.NotNull;
 
 
 public class WithTimeComponent<T extends MessageComponent> extends MessageComponent {
@@ -54,6 +55,7 @@ public class WithTimeComponent<T extends MessageComponent> extends MessageCompon
      * Преобразует компонент в строку
      * @return строк
      */
+    @NotNull
     @Override
     public String toString() {
         return this.displayEmoji ?

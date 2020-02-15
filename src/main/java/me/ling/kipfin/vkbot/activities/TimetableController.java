@@ -6,11 +6,11 @@ import me.ling.kipfin.timetable.exceptions.NoTimetableOnDateException;
 import me.ling.kipfin.timetable.exceptions.timetable.NoSubjectsException;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
+import me.ling.kipfin.vkbot.entities.message.ImageMessage;
 import me.ling.kipfin.vkbot.utils.builders.KeyboardBuilder;
 import me.ling.kipfin.vkbot.entities.VKBTAnswer;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.ImagedTextMessage;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
 import me.ling.kipfin.vkbot.exceptions.StateNotSetException;
 import me.ling.kipfin.vkbot.activities.timetable.components.TimetableHeaderComponent;
 import me.ling.kipfin.vkbot.utils.BTUtils;
@@ -35,7 +35,7 @@ public abstract class TimetableController extends MessageController {
     }
 
     @Override
-    public TextMessage requestExecute(String text, VKUser user, ControllerArgs args) {
+    public CoreMessage requestExecute(String text, VKUser user, ControllerArgs args) {
         try {
             return super.requestExecute(text, user, args);
         } catch (NoTimetableOnDateException ex) {
@@ -44,7 +44,7 @@ public abstract class TimetableController extends MessageController {
             return this.getTextMessageWithHeader(ex.getState(), DateUtils.fromLocalDateString(ex.getDate()),
                     VKBTAnswer.NO_SUBJECTS);
         } catch (StateNotSetException ex) {
-            return new ImagedTextMessage(VKBTAnswer.HOME_UNDEFINED.random(),
+            return new ImageMessage(VKBTAnswer.HOME_UNDEFINED.random(),
                     KeyboardBuilder.startInlineKeyboard,
                     ResourcesManager.get("welcome.jpg"));
         } catch (Exception ex) {
@@ -62,9 +62,9 @@ public abstract class TimetableController extends MessageController {
      * @param displayTime - отображение времени
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element, boolean displayTime) {
+    public CoreMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull CoreMessage element, boolean displayTime) {
         var header = new TimetableHeaderComponent(state, date, displayTime);
-        return new TextMessage(header.toString() + "\n\n" + element.getText()).applyTagValue("state", state);
+        return new CoreMessage(header.toString() + "\n\n" + element.getText(), null).applyTagValue("state", state);
     }
 
     /**
@@ -76,7 +76,7 @@ public abstract class TimetableController extends MessageController {
      * @param displayTime - отображение времени
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBTAnswer element, boolean displayTime) {
+    public CoreMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBTAnswer element, boolean displayTime) {
         return this.getTextMessageWithHeader(state, date, element.toTextMessage(BTUtils.isStateTeacher(state)), displayTime);
     }
 
@@ -88,7 +88,7 @@ public abstract class TimetableController extends MessageController {
      * @param element - элемент
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBTAnswer element) {
+    public CoreMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull VKBTAnswer element) {
         return this.getTextMessageWithHeader(state, date, element.toTextMessage(BTUtils.isStateTeacher(state)), false);
     }
 
@@ -100,7 +100,7 @@ public abstract class TimetableController extends MessageController {
      * @param element - элемент
      * @return - текстовое сообщение
      */
-    public TextMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull TextMessage element) {
+    public CoreMessage getTextMessageWithHeader(String state, LocalDate date, @NotNull CoreMessage element) {
         return this.getTextMessageWithHeader(state, date, element, false);
     }
 }

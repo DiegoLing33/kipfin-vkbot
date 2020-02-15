@@ -5,7 +5,7 @@ import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.app.MessageController;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import me.ling.kipfin.vkbot.managers.BTStatsManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,10 +20,10 @@ public class StatController extends MessageController {
 
     @NotNull
     @Override
-    protected TextMessage execute(String text, VKUser user, ControllerArgs args) {
+    protected CoreMessage execute(String text, VKUser user, ControllerArgs args) {
         if (args.hasArg(0) && args.getOrNull(0).equals("save")) {
             BTStatsManager.save();
-            return new TextMessage("Статистика сохранена!");
+            return new CoreMessage("Статистика сохранена!", null);
         }
         var statsSources = BTStatsManager.loadAll();
         var stats = new BTStatsAnalyzer(statsSources);
@@ -34,7 +34,7 @@ public class StatController extends MessageController {
         var month = stats.getOnMonth(LocalDate.now());
         var monthUnique = BTStatsAnalyzer.unique(month);
 
-        return new TextMessage(String.format("Статистика\n\nИспользований сегодня:\n%s (%s)\n\nИспользований за месяц:\n%s (%s)",
-                today.size(), todayUnique.size(), month.size(), monthUnique.size()));
+        return new CoreMessage(String.format("Статистика\n\nИспользований сегодня:\n%s (%s)\n\nИспользований за месяц:\n%s (%s)",
+                today.size(), todayUnique.size(), month.size(), monthUnique.size()), null);
     }
 }

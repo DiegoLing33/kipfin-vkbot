@@ -2,6 +2,7 @@ package me.ling.kipfin.vkbot.activities.timetable.components;
 
 import me.ling.kipfin.core.utils.DateUtils;
 import me.ling.kipfin.vkbot.app.MessageComponent;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,6 +67,7 @@ public class TimetableHeaderComponent extends MessageComponent {
      *
      * @return - строка
      */
+    @NotNull
     @Override
     public String toString() {
         return this.displayTime ?

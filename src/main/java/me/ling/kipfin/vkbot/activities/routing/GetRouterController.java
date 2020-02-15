@@ -4,7 +4,7 @@ import me.ling.kipfin.vkbot.app.BTActivity;
 import me.ling.kipfin.vkbot.app.ControllerArgs;
 import me.ling.kipfin.vkbot.activities.TimetableController;
 import me.ling.kipfin.vkbot.entities.VKUser;
-import me.ling.kipfin.vkbot.entities.message.TextMessage;
+import me.ling.kipfin.vkbot.entities.message.CoreMessage;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,9 +21,9 @@ public class GetRouterController extends TimetableController {
 
     @NotNull
     @Override
-    public TextMessage execute(String text, VKUser user, ControllerArgs args) {
+    public CoreMessage execute(String text, VKUser user, ControllerArgs args) {
         this.checkUserState(user);
         GetRouterModel model = new GetRouterModel(user.getState());
-        return model.getComponent().toTextMessage();
+        return model.getComponent().toMessage();
     }
 }
